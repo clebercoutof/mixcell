@@ -451,7 +451,7 @@ class Ui_MainWindow(object):
         self.modellist.setItemText(7, _translate("MainWindow", "MX-12W ", None))
         self.modellist.setItemText(8, _translate("MainWindow", "MX-28", None))
         self.modellist.setItemText(9, _translate("MainWindow", "MX-64", None))
-        self.modellist.setItemText(10, _translate("MainWindow", "MX-106drive", None))
+        self.modellist.setItemText(10, _translate("MainWindow", "MX-106", None))
         self.torquemaxtxt.setText(_translate("MainWindow", "Torque Max", None))
         self.label.setText(_translate("MainWindow", "%", None))
         self.reversemode_2.setText(_translate("MainWindow", "Reverse Mode", None))
