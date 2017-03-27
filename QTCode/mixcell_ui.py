@@ -509,12 +509,12 @@ class Ui_MainWindow(object):
             self.reversemode_2.setEnabled(False)
             self.slavemode_2.setEnabled(False)
         
-if __name__ == "__main__":
+'''if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
     MainWindow = QtGui.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec_())'''
 
