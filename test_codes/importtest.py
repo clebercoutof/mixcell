@@ -1,6 +1,6 @@
 import os 
 os.sys.path.append('../QTCode')             # Path setting
-import mixcell_ui as mixcell
+import simple as mixcell
 
 
 if __name__ == "__main__":

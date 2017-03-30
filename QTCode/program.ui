@@ -493,17 +493,48 @@
              </item>
             </layout>
            </item>
-           <item row="0" column="1" colspan="2">
-            <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item row="1" column="0" colspan="2">
+            <widget class="QCheckBox" name="checkBox">
+             <property name="text">
+              <string>Factory Reset</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QLabel" name="servobaudrate">
+              <widget class="QLabel" name="newidtxt">
                <property name="text">
-                <string>Servo Baudrate</string>
+                <string>New ID</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="servo_baudlist">
+              <widget class="QSpinBox" name="new_id">
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>252</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="2">
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QLabel" name="newbaud">
+               <property name="text">
+                <string>New Baudrate</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="new_baudlist">
                <item>
                 <property name="text">
                  <string>1000000</string>
@@ -553,48 +584,17 @@
              </item>
             </layout>
            </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QCheckBox" name="checkBox">
-             <property name="text">
-              <string>Factory Reset</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item row="0" column="1" colspan="2">
+            <layout class="QVBoxLayout" name="verticalLayout_2">
              <item>
-              <widget class="QLabel" name="newidtxt">
+              <widget class="QLabel" name="servobaudrate">
                <property name="text">
-                <string>New ID</string>
+                <string>Servo Baudrate</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QSpinBox" name="new_id">
-               <property name="accelerated">
-                <bool>true</bool>
-               </property>
-               <property name="minimum">
-                <number>1</number>
-               </property>
-               <property name="maximum">
-                <number>252</number>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="2">
-            <layout class="QVBoxLayout" name="verticalLayout_4">
-             <item>
-              <widget class="QLabel" name="newbaud">
-               <property name="text">
-                <string>New Baudrate</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="new_baudlist">
+              <widget class="QComboBox" name="servo_baudlist">
                <item>
                 <property name="text">
                  <string>1000000</string>
@@ -854,40 +854,40 @@
           </layout>
          </item>
          <item row="2" column="0">
-          <widget class="QComboBox" name="mode_list">
+          <widget class="QComboBox" name="model_list">
            <item>
             <property name="text">
-             <string>AX-12Wnomulti</string>
+             <string>AX-12W</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>AX-12Anomulti</string>
+             <string>AX-12A</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>AX-18nomulti</string>
+             <string>AX-18</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>EX-106+ nomulti</string>
+             <string>EX-106+ </string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>RX-24F nomulti</string>
+             <string>RX-24F </string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>RX-28 nomulti</string>
+             <string>RX-28 </string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>RX-64 nomulti</string>
+             <string>RX-64</string>
             </property>
            </item>
            <item>
@@ -907,22 +907,7 @@
            </item>
            <item>
             <property name="text">
-             <string>MX-106drive</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>MX1062.0 NON SUPORTED</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>MX-28 2.0 NON SUPORTED</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>MX-64 2.0 NON SUPORTED</string>
+             <string>MX-106</string>
             </property>
            </item>
           </widget>
