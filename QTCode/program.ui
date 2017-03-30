@@ -88,7 +88,7 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QComboBox" name="portcombox">
+        <widget class="QComboBox" name="port_combox">
          <item>
           <property name="text">
            <string>/dev/ttyUSB0</string>
@@ -124,7 +124,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="scanbutton">
+          <widget class="QPushButton" name="scan_btn">
            <property name="minimumSize">
             <size>
              <width>266</width>
@@ -164,7 +164,7 @@
         </layout>
        </item>
        <item row="4" column="0">
-        <widget class="QListWidget" name="Baudratelist">
+        <widget class="QListWidget" name="baudrate_list">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -347,7 +347,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QListWidget" name="listWidget">
+        <widget class="QListWidget" name="found_list">
          <property name="autoFillBackground">
           <bool>false</bool>
          </property>
@@ -376,8 +376,485 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QGridLayout" name="gridLayout_7">
+         <item row="4" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLabel" name="torquemaxtxt">
+             <property name="text">
+              <string>Torque Max</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="torque_slider">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>100</number>
+             </property>
+             <property name="tracking">
+              <bool>true</bool>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QSpinBox" name="torque_spin">
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>100</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>%</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item row="8" column="0">
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
+           <item>
+            <widget class="QCheckBox" name="reverse_mode">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Reverse Mode</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="slave_mode">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Slave Mode</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>Configuration Parameters</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <item>
+              <widget class="QLabel" name="servoidtxt">
+               <property name="text">
+                <string>Servo ID</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="servo_id">
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>252</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="0" column="1" colspan="2">
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QLabel" name="servobaudrate">
+               <property name="text">
+                <string>Servo Baudrate</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="servo_baudlist">
+               <item>
+                <property name="text">
+                 <string>1000000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>500000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>400000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>250000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>200000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>11520</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>57600</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>19200</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>9600</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QCheckBox" name="checkBox">
+             <property name="text">
+              <string>Factory Reset</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QLabel" name="newidtxt">
+               <property name="text">
+                <string>New ID</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="new_id">
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>252</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="2">
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QLabel" name="newbaud">
+               <property name="text">
+                <string>New Baudrate</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="new_baudlist">
+               <item>
+                <property name="text">
+                 <string>1000000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>500000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>400000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>250000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>200000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>11520</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>57600</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>19200</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>9600</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item row="9" column="0">
+          <widget class="QPushButton" name="update_memory">
+           <property name="maximumSize">
+            <size>
+             <width>1920</width>
+             <height>1080</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-image: url(:/updateeprombut.jpg);</string>
+           </property>
+           <property name="text">
+            <string>UPDATE MEMORY</string>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_16">
+             <property name="text">
+              <string>Mode set</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QCheckBox" name="wheel_mode">
+               <property name="styleSheet">
+                <string notr="true">background-image: url(:/background.jpg);</string>
+               </property>
+               <property name="text">
+                <string>Wheel</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="joint_mode">
+               <property name="autoFillBackground">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Joint</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="tristate">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="multiturn_mode">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
+               <property name="text">
+                <string>Multi Turn</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="0">
+            <layout class="QGridLayout" name="gridLayout_4">
+             <item row="0" column="0">
+              <layout class="QVBoxLayout" name="verticalLayout_6">
+               <item>
+                <widget class="QLabel" name="label_13">
+                 <property name="text">
+                  <string>CW ANGLE LIMIT</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="cw_anglelimit">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="frame">
+                  <bool>true</bool>
+                 </property>
+                 <property name="accelerated">
+                  <bool>true</bool>
+                 </property>
+                 <property name="keyboardTracking">
+                  <bool>true</bool>
+                 </property>
+                 <property name="suffix">
+                  <string notr="true"/>
+                 </property>
+                 <property name="maximum">
+                  <number>4095</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="0" column="1">
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <item>
+                <widget class="QLabel" name="label_14">
+                 <property name="text">
+                  <string>CCW ANGLE LIMIT</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QSpinBox" name="ccw_anglelimit">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="accelerated">
+                  <bool>true</bool>
+                 </property>
+                 <property name="maximum">
+                  <number>4095</number>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Model</string>
+           </property>
+          </widget>
+         </item>
+         <item row="7" column="0">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>D Gain</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>I Gain</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>P Gain</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <item>
+              <widget class="QSpinBox" name="d_gain">
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="maximum">
+                <number>254</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="i_gain">
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="maximum">
+                <number>254</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="p_gain">
+               <property name="accelerated">
+                <bool>true</bool>
+               </property>
+               <property name="maximum">
+                <number>254</number>
+               </property>
+               <property name="value">
+                <number>10</number>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
          <item row="2" column="0">
-          <widget class="QComboBox" name="modellist">
+          <widget class="QComboBox" name="mode_list">
            <item>
             <property name="text">
              <string>AX-12Wnomulti</string>
@@ -450,483 +927,6 @@
            </item>
           </widget>
          </item>
-         <item row="4" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <widget class="QLabel" name="torquemaxtxt">
-             <property name="text">
-              <string>Torque Max</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSlider" name="torqueslider">
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>100</number>
-             </property>
-             <property name="value">
-              <number>100</number>
-             </property>
-             <property name="tracking">
-              <bool>true</bool>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
-             <item>
-              <widget class="QSpinBox" name="spinBox">
-               <property name="minimum">
-                <number>1</number>
-               </property>
-               <property name="maximum">
-                <number>100</number>
-               </property>
-               <property name="value">
-                <number>100</number>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>%</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item row="8" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout_7">
-           <item>
-            <widget class="QCheckBox" name="reversemode_2">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Reverse Mode</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="slavemode_2">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>Slave Mode</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_7">
-           <property name="text">
-            <string>Configuration Parameters</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0">
-            <layout class="QVBoxLayout" name="verticalLayout">
-             <item>
-              <widget class="QLabel" name="servoidtxt">
-               <property name="text">
-                <string>Servo ID</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="servoid">
-               <property name="accelerated">
-                <bool>true</bool>
-               </property>
-               <property name="minimum">
-                <number>1</number>
-               </property>
-               <property name="maximum">
-                <number>252</number>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="0" column="1" colspan="2">
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
-              <widget class="QLabel" name="servobaudrate">
-               <property name="text">
-                <string>Servo Baudrate</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="servobaudlist">
-               <item>
-                <property name="text">
-                 <string>1000000</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>500000</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>400000</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>250000</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>200000</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>11520</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>57600</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>19200</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>9600</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QCheckBox" name="checkBox">
-             <property name="text">
-              <string>Factory Reset</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <item>
-              <widget class="QLabel" name="newidtxt">
-               <property name="text">
-                <string>New ID</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="newid">
-               <property name="accelerated">
-                <bool>true</bool>
-               </property>
-               <property name="minimum">
-                <number>1</number>
-               </property>
-               <property name="maximum">
-                <number>252</number>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="2">
-            <layout class="QVBoxLayout" name="verticalLayout_4">
-             <item>
-              <widget class="QLabel" name="newbaud">
-               <property name="text">
-                <string>New Baudrate</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="newbaudlist">
-               <item>
-                <property name="text">
-                 <string>1000000</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>500000</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>400000</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>250000</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>200000</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>11520</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>57600</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>19200</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>9600</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item row="9" column="0">
-          <widget class="QPushButton" name="updatememory">
-           <property name="maximumSize">
-            <size>
-             <width>1920</width>
-             <height>1080</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-image: url(:/updateeprombut.jpg);</string>
-           </property>
-           <property name="text">
-            <string>UPDATE MEMORY</string>
-           </property>
-           <property name="flat">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <layout class="QGridLayout" name="gridLayout_5">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_16">
-             <property name="text">
-              <string>Mode set</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_6">
-             <item>
-              <widget class="QCheckBox" name="wheel_2">
-               <property name="styleSheet">
-                <string notr="true">background-image: url(:/background.jpg);</string>
-               </property>
-               <property name="text">
-                <string>Wheel</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="joint_2">
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>Joint</string>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-               <property name="tristate">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QCheckBox" name="multiturn_2">
-               <property name="enabled">
-                <bool>false</bool>
-               </property>
-               <property name="text">
-                <string>Multi Turn</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item row="2" column="0">
-            <layout class="QGridLayout" name="gridLayout_4">
-             <item row="0" column="0">
-              <layout class="QVBoxLayout" name="verticalLayout_6">
-               <item>
-                <widget class="QLabel" name="label_13">
-                 <property name="text">
-                  <string>CW ANGLE LIMIT</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="cwanglelimit">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="frame">
-                  <bool>true</bool>
-                 </property>
-                 <property name="accelerated">
-                  <bool>true</bool>
-                 </property>
-                 <property name="keyboardTracking">
-                  <bool>true</bool>
-                 </property>
-                 <property name="suffix">
-                  <string notr="true"/>
-                 </property>
-                 <property name="maximum">
-                  <number>4095</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="0" column="1">
-              <layout class="QVBoxLayout" name="verticalLayout_5">
-               <item>
-                <widget class="QLabel" name="label_14">
-                 <property name="text">
-                  <string>CCW ANGLE LIMIT</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="ccwanglelimit">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="accelerated">
-                  <bool>true</bool>
-                 </property>
-                 <property name="maximum">
-                  <number>4095</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Model</string>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_8">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>D Gain</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_8">
-               <property name="text">
-                <string>I Gain</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_9">
-               <property name="text">
-                <string>P Gain</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_9">
-             <item>
-              <widget class="QSpinBox" name="Dgain">
-               <property name="accelerated">
-                <bool>true</bool>
-               </property>
-               <property name="maximum">
-                <number>254</number>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="Igain">
-               <property name="accelerated">
-                <bool>true</bool>
-               </property>
-               <property name="maximum">
-                <number>254</number>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QSpinBox" name="pgain">
-               <property name="accelerated">
-                <bool>true</bool>
-               </property>
-               <property name="maximum">
-                <number>254</number>
-               </property>
-               <property name="value">
-                <number>10</number>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
         </layout>
        </widget>
       </item>
@@ -959,14 +959,12 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources>
-  <include location="../resource.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
-   <sender>torqueslider</sender>
+   <sender>torque_slider</sender>
    <signal>sliderMoved(int)</signal>
-   <receiver>spinBox</receiver>
+   <receiver>torque_spin</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -980,9 +978,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>spinBox</sender>
+   <sender>torque_spin</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>torqueslider</receiver>
+   <receiver>torque_slider</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -996,9 +994,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>joint_2</sender>
+   <sender>joint_mode</sender>
    <signal>clicked(bool)</signal>
-   <receiver>ccwanglelimit</receiver>
+   <receiver>ccw_anglelimit</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1012,9 +1010,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>joint_2</sender>
+   <sender>joint_mode</sender>
    <signal>clicked(bool)</signal>
-   <receiver>cwanglelimit</receiver>
+   <receiver>cw_anglelimit</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
