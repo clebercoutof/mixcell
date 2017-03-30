@@ -408,7 +408,9 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.joint_mode, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.ccw_anglelimit.setEnabled)
         QtCore.QObject.connect(self.joint_mode, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.cw_anglelimit.setEnabled)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
+        
+        search_id = self.servo_id.value()
+        self.servo_id.valueChanged.connect(testprint)
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.label_5.setText(_translate("MainWindow", "Max. ID", None))
@@ -496,7 +498,8 @@ class Ui_MainWindow(object):
         self.mode_list.setItemText(12, _translate("MainWindow", "MX-28 2.0 NON SUPORTED", None))
         self.mode_list.setItemText(13, _translate("MainWindow", "MX-64 2.0 NON SUPORTED", None))
 
-
+    def testprint():
+        print self.servo_id
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
