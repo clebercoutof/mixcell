@@ -34,6 +34,8 @@ class Ui_MainWindow(object):
         self.config_dgain = 0
         self.config_igain = 0
         self.config_pgain = 0
+        self.config_ccw_anglelimit = 0
+        self.config_cw_angle_limit = 0
         
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
@@ -422,7 +424,16 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         #Connecta a model list habilitando as opções multiturn e reverse/slave somente em modelos especificos
         self.model_list.currentIndexChanged.connect(self.enable_checkboxes)
+        #Unable wheel and joint mode when multiturn is selected
         self.multiturn_mode.clicked.connect(self.uncheck_modes)
+        #Defines the Angle values when the mode is selected
+        self.multiturn_mode.stateChanged.connect(self.define_angle_limit)
+        self.wheel_mode.stateChanged.connect(self.define_angle_limit)
+        self.joint_mode.stateChanged.connect(self.define_angle_limit)
+        #Changes the cw angle limit and ccw angle limit according to the user input
+        self.cw_anglelimit.valueChanged.connect(self.define_angle_limit)
+        self.ccw_anglelimit.valueChanged.connect(self.define_angle_limit)
+        
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
@@ -529,6 +540,21 @@ class Ui_MainWindow(object):
         self.wheel_mode.setCheckState(False)
         self.joint_mode.setCheckState(False)
 
+    #Sets teh cw and cww angle limit based on which mode is checked
+    def define_angle_limit(self):
+        #If wheel mode is selected set limits as 0
+        if self.wheel_mode.checkState() == 2:
+            self.config_cw_angle_limit = 0
+            self.config_ccw_anglelimit = 0
+        #if joint mode is selected, set limits as the user input
+        elif self.joint_mode.checkState() == 2:
+            self.config_cw_angle_limit = self.cw_anglelimit.value()
+            self.config_ccw_anglelimit = self.ccw_anglelimit.value()
+        #if multiturn mode is selected, set limits as 4095
+        elif self.multiturn_mode.checkState() == 2:
+            self.config_cw_angle_limit = 4095
+            self.config_ccw_anglelimit = 4095
+    
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
