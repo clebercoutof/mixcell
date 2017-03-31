@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'program.ui'
 #
-# Created: Fri Mar 31 11:05:08 2017
+# Created: Thu Mar 30 11:11:09 2017
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -415,15 +415,10 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.torque_spin, QtCore.SIGNAL(_fromUtf8("valueChanged(int)")), self.torque_slider.setValue)
         QtCore.QObject.connect(self.joint_mode, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.ccw_anglelimit.setEnabled)
         QtCore.QObject.connect(self.joint_mode, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.cw_anglelimit.setEnabled)
-        QtCore.QObject.connect(self.joint_mode, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.wheel_mode.setDisabled)
-        QtCore.QObject.connect(self.wheel_mode, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.joint_mode.setDisabled)
-        QtCore.QObject.connect(self.multiturn_mode, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.joint_mode.setDisabled)
-        QtCore.QObject.connect(self.multiturn_mode, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.wheel_mode.setDisabled)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         #Connecta a model list habilitando as opções multiturn e reverse/slave somente em modelos especificos
         self.model_list.currentIndexChanged.connect(self.enable_checkboxes)
-        self.multiturn_mode.clicked.connect(self.uncheck_modes)
-
+        
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.label_5.setText(_translate("MainWindow", "Max. ID", None))
@@ -507,8 +502,7 @@ class Ui_MainWindow(object):
         self.model_list.setItemText(8, _translate("MainWindow", "MX-28", None))
         self.model_list.setItemText(9, _translate("MainWindow", "MX-64", None))
         self.model_list.setItemText(10, _translate("MainWindow", "MX-106", None))
-
-        #Only enables the multiturn and the reverse/slave option for specific models
+#Only enables the multiturn and the reverse/slave option for specific models
     def enable_checkboxes(self):
         multiturn_servos_index = [7,8,9,10]
         reverse_slave_index = [10]
@@ -524,10 +518,7 @@ class Ui_MainWindow(object):
         else:
             self.reverse_mode.setEnabled(False)
             self.slave_mode.setEnabled(False)
-    #Unable wheel and joint mode when multiturn is checked  
-    def uncheck_modes(self):
-        self.wheel_mode.setCheckState(False)
-        self.joint_mode.setCheckState(False)
+
 
 if __name__ == "__main__":
     import sys
@@ -537,4 +528,3 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-

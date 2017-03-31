@@ -9,5 +9,6 @@ if __name__ == "__main__":
     MainWindow = mixcell.QtGui.QMainWindow()
     ui = mixcell.Ui_MainWindow()
     ui.setupUi(MainWindow)
+    ui.user_config_id
     MainWindow.show()
     sys.exit(app.exec_())

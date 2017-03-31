@@ -421,8 +421,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.multiturn_mode, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.wheel_mode.setDisabled)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         #Connecta a model list habilitando as opções multiturn e reverse/slave somente em modelos especificos
-        self.model_list.currentIndexChanged.connect(self.enable_checkboxes)
-        self.multiturn_mode.clicked.connect(self.uncheck_modes)
+        self.model_list.currentIndexChanged.connect(self.enable_checkboxes)        
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
@@ -507,8 +506,7 @@ class Ui_MainWindow(object):
         self.model_list.setItemText(8, _translate("MainWindow", "MX-28", None))
         self.model_list.setItemText(9, _translate("MainWindow", "MX-64", None))
         self.model_list.setItemText(10, _translate("MainWindow", "MX-106", None))
-
-        #Only enables the multiturn and the reverse/slave option for specific models
+#Only enables the multiturn and the reverse/slave option for specific models
     def enable_checkboxes(self):
         multiturn_servos_index = [7,8,9,10]
         reverse_slave_index = [10]
@@ -524,10 +522,8 @@ class Ui_MainWindow(object):
         else:
             self.reverse_mode.setEnabled(False)
             self.slave_mode.setEnabled(False)
-    #Unable wheel and joint mode when multiturn is checked  
-    def uncheck_modes(self):
-        self.wheel_mode.setCheckState(False)
-        self.joint_mode.setCheckState(False)
+
+
 
 if __name__ == "__main__":
     import sys

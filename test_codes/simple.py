@@ -24,6 +24,9 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_MainWindow(object):
+    def __init__(self):
+        self.servo_id_config = 1
+        
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(800, 600)
@@ -44,14 +47,18 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
         MainWindow.setStatusBar(self.statusbar)
 
-        self.search_id = 1
+       
+        self.userinput.valueChanged.connect(self.printva)
         
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
-
+    
+    def printva(self):
+        self.search_id = self.userinput.value()
+        print self.search_id
 
 if __name__ == "__main__":
     import sys

@@ -708,7 +708,7 @@
              <item>
               <widget class="QCheckBox" name="multiturn_mode">
                <property name="enabled">
-                <bool>false</bool>
+                <bool>true</bool>
                </property>
                <property name="text">
                 <string>Multi Turn</string>
@@ -1007,6 +1007,70 @@
     <hint type="destinationlabel">
      <x>732</x>
      <y>411</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>joint_mode</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>wheel_mode</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>729</x>
+     <y>336</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>657</x>
+     <y>346</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>wheel_mode</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>joint_mode</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>647</x>
+     <y>334</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>737</x>
+     <y>336</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>multiturn_mode</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>joint_mode</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>799</x>
+     <y>347</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>709</x>
+     <y>342</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>multiturn_mode</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>wheel_mode</receiver>
+   <slot>setDisabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>859</x>
+     <y>340</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>634</x>
+     <y>343</y>
     </hint>
    </hints>
   </connection>
