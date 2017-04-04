@@ -28,7 +28,7 @@ else:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
 
-os.sys.path.append('../DynamixelSDK-master/python/dynamixel_functions_py')             # Path setting
+os.sys.path.append('../dynamixel_functions_py')             # Path setting
 
 import dynamixel_functions as dynamixel                     # Uses Dynamixel SDK library
 
@@ -59,8 +59,10 @@ OPERATION_MODE = 0x00 # Mode is unavailable in Protocol 1.0 Reset
 # Communication result
 dxl_comm_result = COMM_TX_FAIL                            
 
-def search(id_search_min, id_search_max, baudrates_search_list):
+def search(id_search_min, id_search_max, BAUDRATES):
     DEVICENAME ="/dev/ttyUSB0".encode('utf-8')
+    found_servos = []
+    protocol = 1
     #SEARCHING IN THE NETWORK
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
@@ -77,47 +79,42 @@ def search(id_search_min, id_search_max, baudrates_search_list):
         
     init = id_search_min
     end = id_search_max
-    #List containing the found servos in the network
-    found_servos = []
-    #Tries to ping in protocols 1 and 2
-    for protocol in PROTOCOL_VERSIONS:
-    #Loop through all baudrates
-        for baudrate in baudrates_search_list:
-
-            # Set port baudrate
-            if dynamixel.setBaudRate(port_num, baudrate):
-                print("Succeeded to change the baudrate!")
-            else:
-                print("Failed to change the baudrate!")
-                print("Press any key to terminate...")
-                getch()
-                quit()
+    for baudrate in BAUDRATES:
+        # Set port baudrate
+        if dynamixel.setBaudRate(port_num, baudrate):
+            print("Succeeded to change the baudrate!")
+        else:
+            print("Failed to change the baudrate!")
+            print("Press any key to terminate...")
+            getch()
+            quit()
         
-                time.sleep(0.2)
-                actual_id  = init
+        time.sleep(0.2)
+        actual_id  = init
             
-                while actual_id <= end:
+        while actual_id <= end:
             
-                    print("Pinging in ID: %s " % actual_id)
-                    # Try to ping the Dynamixel
-                    # Get Dynamixel model number
-                    dxl_model_number = dynamixel.pingGetModelNum(port_num, protocol, actual_id)
-                    if dynamixel.getLastTxRxResult(port_num, protocol) != COMM_SUCCESS:
-                        dynamixel.printTxRxResult(protocol, dynamixel.getLastTxRxResult(port_num, protocol))
-                    elif dynamixel.getLastRxPacketError(port_num, protocol) != 0:
-                        dynamixel.printRxPacketError(protocol, dynamixel.getLastRxPacketError(port_num, protocol))
-                    else:
-                        #Case the ping succeeds, creates an servo object and stores it in the found_servos vector
-                        servo = Dynamixel()
-                        servo.id = actual_id
-                        servo.baudrate = baudrate
-                        servo.protocol = protocol
-                        servo.model = dxl_model_number
-                        found_servos.append(servo)
+            print("Pinging in ID: %s " % actual_id)
+            # Try to ping the Dynamixel
+            # Get Dynamixel model number
+            dxl_model_number = dynamixel.pingGetModelNum(port_num, protocol, actual_id)
+            if dynamixel.getLastTxRxResult(port_num, protocol) != COMM_SUCCESS:
+                dynamixel.printTxRxResult(protocol, dynamixel.getLastTxRxResult(port_num, protocol))
+            elif dynamixel.getLastRxPacketError(port_num, protocol) != 0:
+                dynamixel.printRxPacketError(protocol, dynamixel.getLastRxPacketError(port_num, protocol))
+            else:
+                #Case the ping succeeds, creates an servo object and stores it in the found_servos vector
+                servo = Dynamixel()
+                servo.id = actual_id
+                servo.baudrate = baudrate
+                servo.protocol = protocol
+                servo.model = dxl_model_number
+                found_servos.append(servo)
 
-                    actual_id = actual_id + 1
+            actual_id = actual_id + 1
 
     # Close port
+    print("closing port")
     dynamixel.closePort(port_num)
     return found_servos
 

@@ -7,8 +7,8 @@
 #
 # WARNING! All changes made in this file will be lost!
 import os
-os.sys.path.append('../source_code')             # Path setting
-import source_code as mixcell
+# Path setting
+import source_code_testversion as mixcell
 from PyQt4 import QtCore, QtGui
 
 try:
@@ -501,6 +501,7 @@ class Ui_MainWindow(object):
             self.table_found.setItem(current_row,0,id_item)
             self.table_found.setItem(current_row,1,model_item)
             self.table_found.setItem(current_row,2,baudrate_item)
+    
     def baudrates_to_search(self):
     #Clear the list 
         self.baudrates_search_list = []
@@ -509,14 +510,13 @@ class Ui_MainWindow(object):
             if self.baudrate_list.item(i).checkState() == QtCore.Qt.Checked:
                 value = int(self.baudrate_list.item(i).text())
                 self.baudrates_search_list.append(value)
-    
 
     def search_test(self):
         id_min = self.IDMIN.value()
         id_max = self.IDMAX.value()
-        
-        found_servos = mixcell.search(id_min,id_max,self.baudrates_search_list)
-        self.table_organize(found_servos)
+        baudrates = self.baudrates_search_list        
+        found = mixcell.search(id_min,id_max,baudrates)
+        self.table_organize(found)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
