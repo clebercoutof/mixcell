@@ -69,14 +69,14 @@ class Ui_MainWindow(object):
         initial_row = 0
         self.tableWidget.setRowCount(v) 
         for i in range(0,v):
-            x = input("model_number")
+            x = raw_input("model_number")
             y = input("id")
             z = input("baudrate")            
             model_item = QtGui.QTableWidgetItem(str(x))
             id_item = QtGui.QTableWidgetItem(str(y))
             baudrate_item = QtGui.QTableWidgetItem(str(z))
-            self.tableWidget.setItem(i,0,model_item)
-            self.tableWidget.setItem(i,1,id_item)   
+            self.tableWidget.setItem(i,0,id_item)
+            self.tableWidget.setItem(i,1,model_item)   
             self.tableWidget.setItem(i,2,baudrate_item)
             print (i)
 

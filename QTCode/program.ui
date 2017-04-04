@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>887</width>
+    <width>1051</width>
     <height>587</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>887</width>
+    <width>1051</width>
     <height>587</height>
    </size>
   </property>
@@ -347,13 +347,28 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QListWidget" name="found_list">
-         <property name="autoFillBackground">
-          <bool>false</bool>
+        <widget class="QTableWidget" name="table_found">
+         <property name="maximumSize">
+          <size>
+           <width>302</width>
+           <height>16777215</height>
+          </size>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::Panel</enum>
-         </property>
+         <column>
+          <property name="text">
+           <string>Id</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Model</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Baudrate</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
@@ -708,7 +723,7 @@
              <item>
               <widget class="QCheckBox" name="multiturn_mode">
                <property name="enabled">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
                <property name="text">
                 <string>Multi Turn</string>
@@ -937,7 +952,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>887</width>
+     <width>1051</width>
      <height>25</height>
     </rect>
    </property>

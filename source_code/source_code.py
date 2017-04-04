@@ -4,7 +4,7 @@
 #Class containing the dynamixel info
 class Dynamixel:
     def __init__(self):
-        self.ID = 0
+        self.id = 0
         self.baudrate = 0
         self.protocol = 1
         self.model = ""
