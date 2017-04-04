@@ -14,25 +14,36 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QSpinBox" name="userinput">
+   <widget class="QTableWidget" name="tableWidget">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>40</y>
-      <width>60</width>
-      <height>27</height>
+      <x>190</x>
+      <y>30</y>
+      <width>291</width>
+      <height>531</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QSpinBox" name="code_value">
-    <property name="geometry">
-     <rect>
-      <x>260</x>
-      <y>40</y>
-      <width>60</width>
-      <height>27</height>
-     </rect>
+    <property name="autoScroll">
+     <bool>true</bool>
     </property>
+    <property name="dragEnabled">
+     <bool>false</bool>
+    </property>
+    <column>
+     <property name="text">
+      <string>Id</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Model</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Baudrate</string>
+     </property>
+    </column>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
