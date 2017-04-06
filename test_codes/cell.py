@@ -501,6 +501,7 @@ class Ui_MainWindow(object):
             self.table_found.setItem(current_row,0,id_item)
             self.table_found.setItem(current_row,1,model_item)
             self.table_found.setItem(current_row,2,baudrate_item)
+    
     def baudrates_to_search(self):
     #Clear the list 
         self.baudrates_search_list = []

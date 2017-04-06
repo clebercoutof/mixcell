@@ -2,12 +2,16 @@
 
 # Form implementation generated from reading ui file 'program.ui'
 #
-# Created: Fri Mar 31 11:05:08 2017
+# Created: Thu Apr  6 16:36:52 2017
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
+
+import os
+#os.sys.path.append('../source_code')             # Path setting
+#import source_code as mixcell
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -36,11 +40,12 @@ class Ui_MainWindow(object):
         self.config_pgain = 0
         self.config_ccw_anglelimit = 0
         self.config_cw_angle_limit = 0
+        self.baudrates_search_list = []
         
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(887, 587)
-        MainWindow.setMinimumSize(QtCore.QSize(887, 587))
+        MainWindow.resize(1051, 587)
+        MainWindow.setMinimumSize(QtCore.QSize(1051, 587))
         MainWindow.setStyleSheet(_fromUtf8(""))
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
@@ -54,25 +59,25 @@ class Ui_MainWindow(object):
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
-        self.IDMAX = QtGui.QSpinBox(self.framesearch)
-        self.IDMAX.setAccelerated(True)
-        self.IDMAX.setMinimum(1)
-        self.IDMAX.setMaximum(252)
-        self.IDMAX.setSingleStep(1)
-        self.IDMAX.setObjectName(_fromUtf8("IDMAX"))
-        self.horizontalLayout.addWidget(self.IDMAX)
-        self.label_5 = QtGui.QLabel(self.framesearch)
-        self.label_5.setObjectName(_fromUtf8("label_5"))
-        self.horizontalLayout.addWidget(self.label_5)
-        self.IDMIN = QtGui.QSpinBox(self.framesearch)
-        self.IDMIN.setAccelerated(True)
-        self.IDMIN.setMinimum(1)
-        self.IDMIN.setMaximum(252)
-        self.IDMIN.setObjectName(_fromUtf8("IDMIN"))
-        self.horizontalLayout.addWidget(self.IDMIN)
+        self.id_search_min = QtGui.QSpinBox(self.framesearch)
+        self.id_search_min.setAccelerated(True)
+        self.id_search_min.setMinimum(1)
+        self.id_search_min.setMaximum(252)
+        self.id_search_min.setObjectName(_fromUtf8("id_search_min"))
+        self.horizontalLayout.addWidget(self.id_search_min)
         self.label_4 = QtGui.QLabel(self.framesearch)
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.horizontalLayout.addWidget(self.label_4)
+        self.id_search_max = QtGui.QSpinBox(self.framesearch)
+        self.id_search_max.setAccelerated(True)
+        self.id_search_max.setMinimum(1)
+        self.id_search_max.setMaximum(252)
+        self.id_search_max.setSingleStep(1)
+        self.id_search_max.setObjectName(_fromUtf8("id_search_max"))
+        self.horizontalLayout.addWidget(self.id_search_max)
+        self.label_5 = QtGui.QLabel(self.framesearch)
+        self.label_5.setObjectName(_fromUtf8("label_5"))
+        self.horizontalLayout.addWidget(self.label_5)
         self.gridLayout.addLayout(self.horizontalLayout, 5, 0, 1, 1)
         self.portttxt = QtGui.QLabel(self.framesearch)
         self.portttxt.setObjectName(_fromUtf8("portttxt"))
@@ -164,11 +169,18 @@ class Ui_MainWindow(object):
         self.label_6.setAlignment(QtCore.Qt.AlignCenter)
         self.label_6.setObjectName(_fromUtf8("label_6"))
         self.gridLayout_2.addWidget(self.label_6, 0, 0, 1, 1)
-        self.found_list = QtGui.QListWidget(self.framelist)
-        self.found_list.setAutoFillBackground(False)
-        self.found_list.setFrameShape(QtGui.QFrame.Panel)
-        self.found_list.setObjectName(_fromUtf8("found_list"))
-        self.gridLayout_2.addWidget(self.found_list, 1, 0, 1, 1)
+        self.table_found = QtGui.QTableWidget(self.framelist)
+        self.table_found.setMaximumSize(QtCore.QSize(302, 16777215))
+        self.table_found.setObjectName(_fromUtf8("table_found"))
+        self.table_found.setColumnCount(3)
+        self.table_found.setRowCount(0)
+        item = QtGui.QTableWidgetItem()
+        self.table_found.setHorizontalHeaderItem(0, item)
+        item = QtGui.QTableWidgetItem()
+        self.table_found.setHorizontalHeaderItem(1, item)
+        item = QtGui.QTableWidgetItem()
+        self.table_found.setHorizontalHeaderItem(2, item)
+        self.gridLayout_2.addWidget(self.table_found, 1, 0, 1, 1)
         self.gridLayout_6.addWidget(self.framelist, 0, 1, 1, 1)
         self.verticalLayout_7 = QtGui.QVBoxLayout()
         self.verticalLayout_7.setObjectName(_fromUtf8("verticalLayout_7"))
@@ -404,7 +416,7 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addLayout(self.verticalLayout_7, 0, 2, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 887, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1051, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
@@ -422,6 +434,7 @@ class Ui_MainWindow(object):
         QtCore.QObject.connect(self.multiturn_mode, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.joint_mode.setDisabled)
         QtCore.QObject.connect(self.multiturn_mode, QtCore.SIGNAL(_fromUtf8("clicked(bool)")), self.wheel_mode.setDisabled)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
         #Connecta a model list habilitando as opções multiturn e reverse/slave somente em modelos especificos
         self.model_list.currentIndexChanged.connect(self.enable_checkboxes)
         #Unable wheel and joint mode when multiturn is selected
@@ -433,12 +446,85 @@ class Ui_MainWindow(object):
         #Changes the cw angle limit and ccw angle limit according to the user input
         self.cw_anglelimit.valueChanged.connect(self.define_angle_limit)
         self.ccw_anglelimit.valueChanged.connect(self.define_angle_limit)
+        #Saves the selected baudrates in a vector
+        self.baudrate_list.itemClicked.connect(self.baudrates_to_search)
+        #search test
+        self.scan_btn.clicked.connect(self.network_search)
         
+    #Only enables the multiturn and the reverse/slave option for specific models
+    def enable_checkboxes(self):
+        multiturn_servos_index = [7,8,9,10]
+        reverse_slave_index = [10]
+        
+        if self.model_list.currentIndex() in multiturn_servos_index:
+            self.multiturn_mode.setEnabled(True)
+        else:
+            self.multiturn_mode.setEnabled(False)
+        
+        if self.model_list.currentIndex() in reverse_slave_index:
+            self.reverse_mode.setEnabled(True)
+            self.slave_mode.setEnabled(True)
+        else:
+            self.reverse_mode.setEnabled(False)
+            self.slave_mode.setEnabled(False)
+    
+    #Unable wheel and joint mode when multiturn is checked  
+    def uncheck_modes(self):
+        self.wheel_mode.setCheckState(False)
+        self.joint_mode.setCheckState(False)
 
+    #Sets teh cw and cww angle limit based on which mode is checked
+    def define_angle_limit(self):
+        #If wheel mode is selected set limits as 0
+        if self.wheel_mode.checkState() == 2:
+            self.config_cw_angle_limit = 0
+            self.config_ccw_anglelimit = 0
+        #if joint mode is selected, set limits as the user input
+        elif self.joint_mode.checkState() == 2:
+            self.config_cw_angle_limit = self.cw_anglelimit.value()
+            self.config_ccw_anglelimit = self.ccw_anglelimit.value()
+        #if multiturn mode is selected, set limits as 4095
+        elif self.multiturn_mode.checkState() == 2:
+            self.config_cw_angle_limit = 4095
+            self.config_ccw_anglelimit = 4095
+            
+    #Organizes the table with the servos in the network
+    def table_organize(self,found_servos):
+        #sets the number of rows
+        self.table_found.setRowCount(len(found_servos))
+        #Loop through the list and set the itens
+        for i in found_servos:
+            current_row = found_servos.index(i)
+            #Creates the items
+            id_item = QtGui.QTableWidgetItem(str(i.id))
+            baudrate_item = QtGui.QTableWidgetItem(str(i.baudrate))
+            model_item =  QtGui.QTableWidgetItem(str(i.model))
+            #Sets cells items
+            self.table_found.setItem(current_row,0,id_item)
+            self.table_found.setItem(current_row,1,model_item)
+            self.table_found.setItem(current_row,2,baudrate_item)
+    
+    def baudrates_to_search(self):
+    #Clear the list 
+        self.baudrates_search_list = []
+        #Loops through the list and saves checked values
+        for i in range(self.baudrate_list.count()):
+            if self.baudrate_list.item(i).checkState() == QtCore.Qt.Checked:
+                value = int(self.baudrate_list.item(i).text())
+                self.baudrates_search_list.append(value)
+    
+
+    def network_search(self):
+        id_min = self.id_search_min.value()
+        id_max = self.id_search_max.value()
+        
+        found_servos = mixcell.search(id_min,id_max,self.baudrates_search_list)
+        self.table_organize(found_servos)
+        
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
-        self.label_5.setText(_translate("MainWindow", "Max. ID", None))
         self.label_4.setText(_translate("MainWindow", "Min. ID", None))
+        self.label_5.setText(_translate("MainWindow", "Max. ID", None))
         self.portttxt.setText(_translate("MainWindow", "PORTS", None))
         self.port_combox.setItemText(0, _translate("MainWindow", "/dev/ttyUSB0", None))
         self.port_combox.setItemText(1, _translate("MainWindow", "/dev/ttyUSB1", None))
@@ -468,6 +554,12 @@ class Ui_MainWindow(object):
         self.baudrate_list.setSortingEnabled(__sortingEnabled)
         self.searchparamtxt.setText(_translate("MainWindow", "SEARCH PARAMETERS", None))
         self.label_6.setText(_translate("MainWindow", "Motors Found", None))
+        item = self.table_found.horizontalHeaderItem(0)
+        item.setText(_translate("MainWindow", "Id", None))
+        item = self.table_found.horizontalHeaderItem(1)
+        item.setText(_translate("MainWindow", "Model", None))
+        item = self.table_found.horizontalHeaderItem(2)
+        item.setText(_translate("MainWindow", "Baudrate", None))
         self.torquemaxtxt.setText(_translate("MainWindow", "Torque Max", None))
         self.label.setText(_translate("MainWindow", "%", None))
         self.reverse_mode.setText(_translate("MainWindow", "Reverse Mode", None))
@@ -519,42 +611,7 @@ class Ui_MainWindow(object):
         self.model_list.setItemText(9, _translate("MainWindow", "MX-64", None))
         self.model_list.setItemText(10, _translate("MainWindow", "MX-106", None))
 
-        #Only enables the multiturn and the reverse/slave option for specific models
-    def enable_checkboxes(self):
-        multiturn_servos_index = [7,8,9,10]
-        reverse_slave_index = [10]
-        
-        if self.model_list.currentIndex() in multiturn_servos_index:
-            self.multiturn_mode.setEnabled(True)
-        else:
-            self.multiturn_mode.setEnabled(False)
-        
-        if self.model_list.currentIndex() in reverse_slave_index:
-            self.reverse_mode.setEnabled(True)
-            self.slave_mode.setEnabled(True)
-        else:
-            self.reverse_mode.setEnabled(False)
-            self.slave_mode.setEnabled(False)
-    #Unable wheel and joint mode when multiturn is checked  
-    def uncheck_modes(self):
-        self.wheel_mode.setCheckState(False)
-        self.joint_mode.setCheckState(False)
 
-    #Sets teh cw and cww angle limit based on which mode is checked
-    def define_angle_limit(self):
-        #If wheel mode is selected set limits as 0
-        if self.wheel_mode.checkState() == 2:
-            self.config_cw_angle_limit = 0
-            self.config_ccw_anglelimit = 0
-        #if joint mode is selected, set limits as the user input
-        elif self.joint_mode.checkState() == 2:
-            self.config_cw_angle_limit = self.cw_anglelimit.value()
-            self.config_ccw_anglelimit = self.ccw_anglelimit.value()
-        #if multiturn mode is selected, set limits as 4095
-        elif self.multiturn_mode.checkState() == 2:
-            self.config_cw_angle_limit = 4095
-            self.config_ccw_anglelimit = 4095
-    
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)

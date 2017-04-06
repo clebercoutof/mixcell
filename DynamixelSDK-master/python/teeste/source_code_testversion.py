@@ -59,7 +59,7 @@ OPERATION_MODE = 0x00 # Mode is unavailable in Protocol 1.0 Reset
 # Communication result
 dxl_comm_result = COMM_TX_FAIL                            
 
-def search(id_search_min, id_search_max, BAUDRATES):
+def search(id_search_min, id_search_max, baudrates_list):
     DEVICENAME ="/dev/ttyUSB0".encode('utf-8')
     found_servos = []
     protocol = 1
@@ -75,11 +75,10 @@ def search(id_search_min, id_search_max, BAUDRATES):
         print("Failed to open the port!")
         print("Press any key to terminate...")
         getch()
-        quit()
-        
+        quit()        
     init = id_search_min
     end = id_search_max
-    for baudrate in BAUDRATES:
+    for baudrate in baudrates_list:
         # Set port baudrate
         if dynamixel.setBaudRate(port_num, baudrate):
             print("Succeeded to change the baudrate!")
@@ -88,12 +87,9 @@ def search(id_search_min, id_search_max, BAUDRATES):
             print("Press any key to terminate...")
             getch()
             quit()
-        
         time.sleep(0.2)
-        actual_id  = init
-            
-        while actual_id <= end:
-            
+        actual_id  = init            
+        while actual_id <= end:           
             print("Pinging in ID: %s " % actual_id)
             # Try to ping the Dynamixel
             # Get Dynamixel model number
