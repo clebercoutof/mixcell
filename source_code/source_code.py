@@ -71,6 +71,7 @@ def search(id_search_min, id_search_max, baudrates_search_list):
         print("Press any key to terminate...")
         getch()
         quit()
+
     #Declaring the limits of the search    
     init = id_search_min
     end = id_search_max
@@ -151,8 +152,8 @@ def set_angle_limit(id,cw_angle_limit, ccw_angle_limit,baudrate):
         return 0
     else:
         print("CW angle changed to: %s" % cw_angle_limit)
-        return 1
-    
+        time.sleep(0.5)
+   
     # Write CCW angle limit
     dynamixel.write2ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_CCW_ANGLE_LIMIT, ccw_angle_limit)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
@@ -163,8 +164,8 @@ def set_angle_limit(id,cw_angle_limit, ccw_angle_limit,baudrate):
         return 0
     else:
         print("CCW angle changed to: %s" % ccw_angle_limit)
-        return 1
-    
+        time.sleep(0.5)
+        
 def factory_reset(id,baudrate):
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
@@ -360,7 +361,7 @@ def reverse_slave(id,reverse_mode_enable,slave_mode_enable,baudrate):
             time.sleep(0.2)
             return 1
 
-def pid_gain(id,dgain,igain,pgain,baudrate):
+def set_pid_gain(id,dgain,igain,pgain,baudrate):
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -391,8 +392,8 @@ def pid_gain(id,dgain,igain,pgain,baudrate):
         return 0
     else:
         #D gain set
-        time.sleep(0.2)
-        return 1
+        time.sleep(0.5)
+
     
     # I gain config
     dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_I_GAIN, igain)
@@ -404,8 +405,8 @@ def pid_gain(id,dgain,igain,pgain,baudrate):
         return 0
     else:
         #I gain set
-        time.sleep(0.2)
-        return 1
+        time.sleep(0.5)
+
     
     # P gain config
     dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_P_GAIN, pgain)
@@ -417,8 +418,7 @@ def pid_gain(id,dgain,igain,pgain,baudrate):
         return 0
     else:
         #P gain set
-        time.sleep(0.2)
-        return 1    
+        time.sleep(0.5) 
     
    
     
