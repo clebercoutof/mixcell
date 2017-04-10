@@ -10,8 +10,8 @@
 from PyQt4 import QtCore, QtGui
 
 import os
-#os.sys.path.append('../source_code')             # Path setting
-#import source_code as mixcell
+os.sys.path.append('../source_code')             # Path setting
+import source_code as mixcell
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -517,7 +517,6 @@ class Ui_MainWindow(object):
     def network_search(self):
         id_min = self.id_search_min.value()
         id_max = self.id_search_max.value()
-        
         found_servos = mixcell.search(id_min,id_max,self.baudrates_search_list)
         self.table_organize(found_servos)
         

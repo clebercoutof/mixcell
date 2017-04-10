@@ -28,8 +28,6 @@ else:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return ch
 
-os.sys.path.append('../DynamixelSDK-master/python/dynamixel_functions_py')             # Path setting
-
 import dynamixel_functions as dynamixel                     # Uses Dynamixel SDK library
 
 #Search parameters                           
@@ -80,8 +78,10 @@ def search(id_search_min, id_search_max, baudrates_search_list):
     found_servos = []
     #Tries to ping in protocols 1 and 2
     for protocol in PROTOCOL_VERSIONS:
+        print("Using protocol %s" % str(protocol))
     #Loop through all baudrates
         for baudrate in baudrates_search_list:
+            actual_id  = init
             # Set port baudrate
             if dynamixel.setBaudRate(port_num, baudrate):
                 print("Succeeded to change the baudrate!")
@@ -92,36 +92,35 @@ def search(id_search_min, id_search_max, baudrates_search_list):
                 quit()
         
                 time.sleep(0.2)
-                actual_id  = init
             
-                while actual_id <= end:            
-                    print("Pinging in ID: %s " % actual_id)
-                    # Try to ping the Dynamixel
-                    # Get Dynamixel model number
-                    dxl_model_number = dynamixel.pingGetModelNum(port_num, protocol, actual_id)
-                    if dynamixel.getLastTxRxResult(port_num, protocol) != COMM_SUCCESS:
-                        dynamixel.printTxRxResult(protocol, dynamixel.getLastTxRxResult(port_num, protocol))
+            while actual_id <= end:            
+                print("Pinging in ID: %s " % actual_id)
+                # Try to ping the Dynamixel
+                # Get Dynamixel model number
+                dxl_model_number = dynamixel.pingGetModelNum(port_num, protocol, actual_id)
+                if dynamixel.getLastTxRxResult(port_num, protocol) != COMM_SUCCESS:
+                    dynamixel.printTxRxResult(protocol, dynamixel.getLastTxRxResult(port_num, protocol))
                         
-                    elif dynamixel.getLastRxPacketError(port_num, protocol) != 0:
-                        dynamixel.printRxPacketError(protocol, dynamixel.getLastRxPacketError(port_num, protocol))
+                elif dynamixel.getLastRxPacketError(port_num, protocol) != 0:
+                    dynamixel.printRxPacketError(protocol, dynamixel.getLastRxPacketError(port_num, protocol))
                         
-                    else:
-                        #Case the ping succeeds, creates an servo object and stores it in the found_servos vector
-                        servo = Dynamixel()
-                        servo.id = actual_id
-                        servo.baudrate = baudrate
-                        servo.protocol = protocol
-                        servo.model = dxl_model_number
-                        found_servos.append(servo)
-
-                    actual_id = actual_id + 1
+                else:
+                    #Case the ping succeeds, creates an servo object and stores it in the found_servos vector
+                    servo = Dynamixel()
+                    servo.id = actual_id
+                    servo.baudrate = baudrate
+                    servo.protocol = protocol
+                    servo.model = dxl_model_number
+                    found_servos.append(servo)
+                
+                actual_id = actual_id + 1
 
     # Close port
     dynamixel.closePort(port_num)
     return found_servos
 
 
-def angle_limit(cw_angle_limit, ccw_angle_limit, id,baudrate):
+def set_angle_limit(id,cw_angle_limit, ccw_angle_limit,baudrate):
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -143,7 +142,7 @@ def angle_limit(cw_angle_limit, ccw_angle_limit, id,baudrate):
         getch()
         quit()    
     #Write CW angle limit
-    dynamixel.write2ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_CW_ANGLE_LIMIT, CW)
+    dynamixel.write2ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_CW_ANGLE_LIMIT, cw_angle_limit)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
         dynamixel.printTxRxResult(PROTOCOL_1 , dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ))
         return 0
@@ -151,11 +150,11 @@ def angle_limit(cw_angle_limit, ccw_angle_limit, id,baudrate):
         dynamixel.printRxPacketError(PROTOCOL_1 , dynamixel.getLastRxPacketError(port_num,PROTOCOL_1 ))
         return 0
     else:
-        print("CW angle changed to: %s" % CW)
+        print("CW angle changed to: %s" % cw_angle_limit)
         return 1
     
     # Write CCW angle limit
-    dynamixel.write2ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_CCW_ANGLE_LIMIT, CCW)
+    dynamixel.write2ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_CCW_ANGLE_LIMIT, ccw_angle_limit)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
         dynamixel.printTxRxResult(PROTOCOL_1 , dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ))
         return 0
@@ -163,7 +162,7 @@ def angle_limit(cw_angle_limit, ccw_angle_limit, id,baudrate):
         dynamixel.printRxPacketError(PROTOCOL_1 , dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ))
         return 0
     else:
-        print("CCW angle changed to: %s" % CCW)
+        print("CCW angle changed to: %s" % ccw_angle_limit)
         return 1
     
 def factory_reset(id,baudrate):
@@ -199,7 +198,7 @@ def factory_reset(id,baudrate):
         sleep(2)
         return 1
     
-def torque_max(id, percentage):
+def set_torque_max(id, percentage,baudrate):
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -234,9 +233,10 @@ def torque_max(id, percentage):
         dynamixel.printRxPacketError(PROTOCOL_1 , dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ))
         return 0
     else:
+        time.sleep(0.2)
         return 1
 
-def set_id(id, new_id):
+def set_id(id, new_id,baudrate):
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -256,10 +256,9 @@ def set_id(id, new_id):
         print("Failed to change the baudrate!")
         print("Press any key to terminate...")
         getch()
-        quit()
-        
+        quit()        
     #Writes the new ID onto the register    
-    dynamixel.write1ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_ID, new_id)
+    dynamixel.write1ByteTxRx(port_num, PROTOCOL_1 ,id, ADDR_ID, new_id)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
         dynamixel.printTxRxResult(PROTOCOL_1, dynamixel.getLastTxRxResult(port_num, PROTOCOL_1))
         return 0
@@ -268,9 +267,10 @@ def set_id(id, new_id):
         return 0
     else:
     #ID CHANGED
+        time.sleep(0.2)
         return 1
         
-def set_baudrate(id,new_baudrate):
+def set_baudrate(id,new_baudrate,baudrate):
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -296,7 +296,7 @@ def set_baudrate(id,new_baudrate):
     value = baudnum[new_baudrate]
     
     # Set baudrate
-    dynamixel.write1ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_BAUDRATE, BAUDNUM)
+    dynamixel.write1ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_BAUDRATE, value)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
         dynamixel.printTxRxResult(PROTOCOL_1 , dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ))
         return 0
@@ -305,10 +305,11 @@ def set_baudrate(id,new_baudrate):
         return 0
     else:
         #BAUDRATE CHANGED
+        time.sleep(0.2)
         return 1
 
 
-def reverse_slave(id,checkbox_reverse,checkbox_slave):
+def reverse_slave(id,reverse_mode_enable,slave_mode_enable,baudrate):
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -334,29 +335,32 @@ def reverse_slave(id,checkbox_reverse,checkbox_slave):
     reverse_binary = 0x01
     drive_mode_byte = 0x00
     
-    if checkbox_reverse == 1:
+    if reverse_mode_enable == 2:
         drive_mode_byte = reverse_binary + drive_mode_byte
     else:
         drive_mode_byte = drive_mode_byte
     
-    if checkbox_master == 1:
+    if slave_mode_enable == 2:
         drive_mode_byte = slave_binary + drive_mode_byte
     else:
         drive_mode_byte = drive_mode_byte
     
+    #Only tries to config 
+    if reverse_mode_enable + slave_mode_enable >=2:
     # Set drive mode
-    dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_DRIVE_MODE, drive_mode_byte)
-    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1) != COMM_SUCCESS:
-        dynamixel.printTxRxResult(PROTOCOL_1, dynamixel.getLastTxRxResult(port_num, PROTOCOL_1))
-        return 0
-    elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1) != 0:
-        dynamixel.printRxPacketError(PROTOCOL_1, dynamixel.getLastRxPacketError(port_num, PROTOCOL_1))
-        return 0
-    else:
-        #Drive mode changed
-        return 1
+        dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_DRIVE_MODE, drive_mode_byte)
+        if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1) != COMM_SUCCESS:
+            dynamixel.printTxRxResult(PROTOCOL_1, dynamixel.getLastTxRxResult(port_num, PROTOCOL_1))
+            return 0
+        elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1) != 0:
+            dynamixel.printRxPacketError(PROTOCOL_1, dynamixel.getLastRxPacketError(port_num, PROTOCOL_1))
+            return 0
+        else:
+            #Drive mode changed
+            time.sleep(0.2)
+            return 1
 
-def pid_gain(id,dgain,igain,pgain):
+def pid_gain(id,dgain,igain,pgain,baudrate):
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -387,6 +391,7 @@ def pid_gain(id,dgain,igain,pgain):
         return 0
     else:
         #D gain set
+        time.sleep(0.2)
         return 1
     
     # I gain config
@@ -399,6 +404,7 @@ def pid_gain(id,dgain,igain,pgain):
         return 0
     else:
         #I gain set
+        time.sleep(0.2)
         return 1
     
     # P gain config
@@ -411,6 +417,7 @@ def pid_gain(id,dgain,igain,pgain):
         return 0
     else:
         #P gain set
+        time.sleep(0.2)
         return 1    
     
    

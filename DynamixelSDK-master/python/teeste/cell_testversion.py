@@ -7,6 +7,7 @@
 #
 # WARNING! All changes made in this file will be lost!
 import os
+import time
 # Path setting
 import source_code_testversion as mixcell
 from PyQt4 import QtCore, QtGui
@@ -28,14 +29,6 @@ except AttributeError:
 class Ui_MainWindow(object):
     #Creating all the variables that will be used as argument of dynamixel functions
     def __init__(self):
-        self.config_id = 1
-        self.config_baudrate = 1000000
-        self.config_new_id_ = 1
-        self.config_new_baudrate = 1000000
-        self.config_torque_percentage = 100
-        self.config_dgain = 0
-        self.config_igain = 0
-        self.config_pgain = 0
         self.config_ccw_anglelimit = 0
         self.config_cw_angle_limit = 0
         self.baudrates_search_list = []
@@ -245,9 +238,9 @@ class Ui_MainWindow(object):
         self.servo_id.setObjectName(_fromUtf8("servo_id"))
         self.verticalLayout.addWidget(self.servo_id)
         self.gridLayout_3.addLayout(self.verticalLayout, 0, 0, 1, 1)
-        self.checkBox = QtGui.QCheckBox(self.frameconfig)
-        self.checkBox.setObjectName(_fromUtf8("checkBox"))
-        self.gridLayout_3.addWidget(self.checkBox, 1, 0, 1, 2)
+        self.factory_reset_box = QtGui.QCheckBox(self.frameconfig)
+        self.factory_reset_box.setObjectName(_fromUtf8("factory_reset_box"))
+        self.gridLayout_3.addWidget(self.factory_reset_box, 1, 0, 1, 2)
         self.verticalLayout_3 = QtGui.QVBoxLayout()
         self.verticalLayout_3.setObjectName(_fromUtf8("verticalLayout_3"))
         self.newidtxt = QtGui.QLabel(self.frameconfig)
@@ -448,6 +441,8 @@ class Ui_MainWindow(object):
         self.baudrate_list.itemClicked.connect(self.baudrates_to_search)
         #search test
         self.scan_btn.clicked.connect(self.search_test)
+        #config test
+        self.update_memory.clicked.connect(self.configure)
              
     #Only enables the multiturn and the reverse/slave option for specific models
     def enable_checkboxes(self):
@@ -517,6 +512,54 @@ class Ui_MainWindow(object):
         baudrates = self.baudrates_search_list        
         found = mixcell.search(id_min,id_max,baudrates)
         self.table_organize(found)
+    
+    def configure(self):
+        id = self.servo_id.value()
+        baudrate = int(self.servo_baudlist.currentText())
+        
+        if self.factory_reset_box.checkState() == 2:
+            mixcell.factory_reset(id,baudrate)
+        else:
+            #Id to be configured
+            new_id = self.new_id.value()
+            #Sets ID
+            mixcell.set_id(id, new_id,baudrate)
+            id = new_id
+            time.sleep(0.2)
+            #Baudrate to be configured
+            new_baudrate = int(self.new_baudlist.currentText())
+            mixcell.set_baudrate(id,new_baudrate,baudrate)
+            baudrate = new_baudrate
+            time.sleep(0.2)
+            #Cw angle limit to be configured
+            cw_angle_limit = self.cw_anglelimit.value()
+            #CCW angle limit to be configured
+            ccw_angle_limit = self.ccw_anglelimit.value()
+            mixcell.set_angle_limit(id,cw_angle_limit,ccw_angle_limit,baudrate)
+            time.sleep(0.2)
+            #Torque value
+            torque_value = self.torque_spin.value()
+            #mixcell.set_torque_max(id,torque_value,baudrate)            
+            #time.sleep(0.2)
+            #D gain to be configured
+            d_gain = self.d_gain.value()
+            #I gain to be configured
+            i_gain = self.i_gain.value()
+            #P gain to be configured
+            p_gain = self.p_gain.value()
+            #Reverse mode checkbox state
+            reverse_mode_enable = self.reverse_mode.checkState()
+            #Slave mode checkbox state
+            slave_mode_enable = self.slave_mode.checkState()
+
+            #Sets angle limits
+            mixcell.set_angle_limit(id,cw_angle_limit,ccw_angle_limit,baudrate)
+            #Sets max torque value
+            mixcell.set_torque_max(id,torque_value,baudrate)            
+            #Sets baudrate
+            
+            print("configured")
+            
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
@@ -563,7 +606,7 @@ class Ui_MainWindow(object):
         self.slave_mode.setText(_translate("MainWindow", "Slave Mode", None))
         self.label_7.setText(_translate("MainWindow", "Configuration Parameters", None))
         self.servoidtxt.setText(_translate("MainWindow", "Servo ID", None))
-        self.checkBox.setText(_translate("MainWindow", "Factory Reset", None))
+        self.factory_reset_box.setText(_translate("MainWindow", "Factory Reset", None))
         self.newidtxt.setText(_translate("MainWindow", "New ID", None))
         self.newbaud.setText(_translate("MainWindow", "New Baudrate", None))
         self.new_baudlist.setItemText(0, _translate("MainWindow", "1000000", None))
