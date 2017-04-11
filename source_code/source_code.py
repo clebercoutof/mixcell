@@ -53,6 +53,7 @@ COMM_SUCCESS                = 0                             # Communication Succ
 COMM_TX_FAIL                = -1001                         # Communication Tx Failed
 
 OPERATION_MODE = 0x00 # Mode is unavailable in Protocol 1.0 Reset
+model_num = {44:"AX-12W",18:"AX-12A",28:"EX-106+",24:"RX-24F",28:"RX-28",64:"RX-64",104:"MX-12W",29:"MX-28",54:"MX-64",320:"MX-106"}
 
 # Communication result
 dxl_comm_result = COMM_TX_FAIL                            
@@ -346,20 +347,18 @@ def reverse_slave(id,reverse_mode_enable,slave_mode_enable,baudrate):
     else:
         drive_mode_byte = drive_mode_byte
     
-    #Only tries to config 
-    if reverse_mode_enable + slave_mode_enable >=2:
+ 
     # Set drive mode
-        dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_DRIVE_MODE, drive_mode_byte)
-        if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1) != COMM_SUCCESS:
-            dynamixel.printTxRxResult(PROTOCOL_1, dynamixel.getLastTxRxResult(port_num, PROTOCOL_1))
-            return 0
-        elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1) != 0:
-            dynamixel.printRxPacketError(PROTOCOL_1, dynamixel.getLastRxPacketError(port_num, PROTOCOL_1))
-            return 0
-        else:
-            #Drive mode changed
-            time.sleep(0.2)
-            return 1
+    dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_DRIVE_MODE, drive_mode_byte)
+    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1) != COMM_SUCCESS:
+        dynamixel.printTxRxResult(PROTOCOL_1, dynamixel.getLastTxRxResult(port_num, PROTOCOL_1))
+        return 0
+    elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1) != 0:
+        dynamixel.printRxPacketError(PROTOCOL_1, dynamixel.getLastRxPacketError(port_num, PROTOCOL_1))
+        return 0
+    else:
+        print("Drive mode changed")
+        time.sleep(0.2)
 
 def set_pid_gain(id,dgain,igain,pgain,baudrate):
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
