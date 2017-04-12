@@ -530,6 +530,8 @@ class Ui_MainWindow(object):
             self.port_error_message()
         elif search_result == mixcell.BAUDRATE_ERROR:
             self.baudrate_error_message()
+        elif len(search_result) == 0:
+            self.no_servos_found_message()
         else:
             self.table_organize(search_result)
                 
@@ -560,6 +562,13 @@ class Ui_MainWindow(object):
         msg.setText("Error while changing baudrate" )
         msg.setWindowTitle("Baudrate error")
         msg.exec_()
+    
+    def no_servos_found_message(self):
+        msg = QtGui.QMessageBox()
+        msg.setIcon(QtGui.QMessageBox.Warning)
+        msg.setText("No servos were found on your network, check your search parameters" )
+        msg.setWindowTitle("Nothing found")
+        msg.exec_()        
         
     def configure_confirmation(self):
         msg = QtGui.QMessageBox()
@@ -571,11 +580,7 @@ class Ui_MainWindow(object):
         if rev == QtGui.QMessageBox.Yes:
             self.configure()
         else:
-            pass
-        
-        
-        
-        
+            pass        
     #Configures the servo with the specified parameters
     #Arguments: Nothing       #Returns: Nothing
     def configure(self):
@@ -606,6 +611,10 @@ class Ui_MainWindow(object):
                 self.port_error_message()
             elif baudrate_change_result == mixcell.BAUDRATE_ERROR:
                 self.baudrate_error_message()
+            if baudrate_change_result == mixcell.HARDWARE_COMM_ERROR:
+                self.hardware_comm_error_message()
+            elif baudrate_change_result == mixcell.COMM_ERROR:
+                self.comm_error_message()
             else:            
                 baudrate = new_baudrate
             
@@ -675,7 +684,7 @@ class Ui_MainWindow(object):
         port = str(self.port_combox.currentText())
         devicename = port.encode('-utf8')
         mixcell.DEVICENAME = devicename
-        
+    
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.label_4.setText(_translate("MainWindow", "Min. ID", None))

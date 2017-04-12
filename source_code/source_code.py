@@ -103,10 +103,8 @@ def search(id_search_min, id_search_max, baudrates_search_list):
                 dxl_model_number = dynamixel.pingGetModelNum(port_num, protocol, actual_id)
                 if dynamixel.getLastTxRxResult(port_num, protocol) != COMM_SUCCESS:
                     dynamixel.printTxRxResult(protocol, dynamixel.getLastTxRxResult(port_num, protocol))
-                    return COMM_ERROR 
                 elif dynamixel.getLastRxPacketError(port_num, protocol) != 0:
-                    dynamixel.printRxPacketError(protocol, dynamixel.getLastRxPacketError(port_num, protocol))
-                    return HARDWARE_COMM_ERROR   
+                    dynamixel.printRxPacketError(protocol, dynamixel.getLastRxPacketError(port_num, protocol))  
                 else:
                     #Case the ping succeeds, creates an servo object and stores it in the found_servos vector
                     servo = Dynamixel()
@@ -219,7 +217,7 @@ def set_torque_max(id, percentage,baudrate):
         value = int(percentage/0.0977517107)
     #Writing the value in the address
     dynamixel.write2ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_MAX_TORQUE, value)
-    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != :
+    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
         dynamixel.printTxRxResult(PROTOCOL_1 , dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ))
         return COMM_ERROR
     elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ) != 0:
@@ -392,8 +390,3 @@ def set_pid_gain(id,dgain,igain,pgain,baudrate):
         #P gain set
         time.sleep(0.5)
     print("Gain changed")
-    
-   
-    
-    
-    
