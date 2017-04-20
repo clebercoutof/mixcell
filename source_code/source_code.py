@@ -3,6 +3,7 @@
 
 #Class containing the dynamixel info
 class Dynamixel:
+    
     def __init__(self):
         self.id = 0
         self.baudrate = 0
@@ -64,6 +65,14 @@ model_num = {44:"AX-12W",18:"AX-12A",28:"EX-106+",24:"RX-24F",28:"RX-28",64:"RX-
 dxl_comm_result = COMM_TX_FAIL                            
 
 def search(id_search_min, id_search_max, baudrates_search_list):
+    """Search for servos in range of ``id_search_min` and ``id_search_max`` for all baudrates in ``baudrates_search_list``
+    :param int id_search_min: ID to start searching
+    :param int id_search_max: ID to stop pinging
+    :param baudrates_search_list: List containing the baudrates that the user want to search
+    :return: ``found_servos`` List containing the servos found
+    :rtype: ``Dynamixel`` Class items"""
+           
+    
     #SEARCHING IN THE NETWORK
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
@@ -122,6 +131,16 @@ def search(id_search_min, id_search_max, baudrates_search_list):
 
 
 def set_angle_limit(id,cw_angle_limit, ccw_angle_limit,baudrate):
+    """Configured the angle limits of a servo
+    :param int id: Servo ``ìd``
+    :param int cw_angle_limit: Clockwise angle limit to be configured
+    :param int ccw_angle_limit: Counter-clockwise angle limit to be configured
+    :param baudrate: Baudrate of the servo to be configured
+    :return: ``PORT_ERROR`` case it fails to open the port
+    :return: ``BAUDRATE_ERROR`` case it fails to change baudrate
+    :return: ``COMM_ERROR`` case there is a communication error
+    :return: ``HARDWARE_COMM_ERROR`` case there is a hardware communication error
+    :return: NONE case the operation succeeds"""    
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -165,6 +184,14 @@ def set_angle_limit(id,cw_angle_limit, ccw_angle_limit,baudrate):
         time.sleep(0.5)
         
 def factory_reset(id,baudrate):
+    """Resets a servo to factory config
+    :param int id: Servo ``ìd``
+    :param baudrate: Baudrate of the servo to be configured
+    :return: ``PORT_ERROR`` case it fails to open the port
+    :return: ``BAUDRATE_ERROR`` case it fails to change baudrate
+    :return: ``COMM_ERROR`` case there is a communication error
+    :return: ``HARDWARE_COMM_ERROR`` case there is a hardware communication error
+    :return: NONE case the operation succeeds"""    
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
