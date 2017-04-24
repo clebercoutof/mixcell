@@ -4,7 +4,7 @@
 #Class containing the dynamixel info
 class Dynamixel:
     """This class is used to store the Dynamixel, ``id``, ``baudrate``, ``protocol`` and ``model``."""
-  
+
     def __init__(self):
         self.id = 0
         self.baudrate = 0
@@ -32,13 +32,13 @@ else:
 
 import dynamixel_functions as dynamixel                     # Uses Dynamixel SDK library
 
-#Search parameters                           
+#Search parameters
 PROTOCOL_VERSIONS           = [1,2]
 
 # Default setting
 DEVICENAME                   = "/dev/ttyUSB0".encode('utf-8')
-PROTOCOL_1                   = 1                                                           
-#ADDRESSES 
+PROTOCOL_1                   = 1
+#ADDRESSES
 ADDR_CW_ANGLE_LIMIT         = 6
 ADDR_CCW_ANGLE_LIMIT        = 8
 ADDR_MAX_TORQUE             = 14
@@ -61,7 +61,7 @@ OPERATION_MODE = 0x00 # Mode is unavailable in Protocol 1.0 Reset
 model_num = {44:"AX-12W",18:"AX-12A",28:"EX-106+",24:"RX-24F",28:"RX-28",64:"RX-64",104:"MX-12W",29:"MX-28",54:"MX-64",320:"MX-106"}
 
 # Communication result
-dxl_comm_result = COMM_TX_FAIL                            
+dxl_comm_result = COMM_TX_FAIL
 
 def search(id_search_min, id_search_max, baudrates_search_list):
     """Search for servos in range of ``id_search_min`` and ``id_search_max`` for all baudrates in ``baudrates_search_list``.
@@ -83,7 +83,7 @@ def search(id_search_min, id_search_max, baudrates_search_list):
         print("Failed to open the port!")
         return PORT_ERROR
 
-    #Declaring the limits of the search    
+    #Declaring the limits of the search
     init = id_search_min
     end = id_search_max
     #List containing the found servos in the network
@@ -100,10 +100,10 @@ def search(id_search_min, id_search_max, baudrates_search_list):
             else:
                 print("Failed to change the baudrate!")
                 return BAUDRATE_ERROR
-        
+
             time.sleep(0.2)
-            
-            while actual_id <= end:            
+
+            while actual_id <= end:
                 print("Pinging in ID: %s " % actual_id)
                 # Try to ping the Dynamixel
                 # Get Dynamixel model number
@@ -111,7 +111,7 @@ def search(id_search_min, id_search_max, baudrates_search_list):
                 if dynamixel.getLastTxRxResult(port_num, protocol) != COMM_SUCCESS:
                     dynamixel.printTxRxResult(protocol, dynamixel.getLastTxRxResult(port_num, protocol))
                 elif dynamixel.getLastRxPacketError(port_num, protocol) != 0:
-                    dynamixel.printRxPacketError(protocol, dynamixel.getLastRxPacketError(port_num, protocol))  
+                    dynamixel.printRxPacketError(protocol, dynamixel.getLastRxPacketError(port_num, protocol))
                 else:
                     #Case the ping succeeds, creates an servo object and stores it in the found_servos vector
                     servo = Dynamixel()
@@ -120,7 +120,7 @@ def search(id_search_min, id_search_max, baudrates_search_list):
                     servo.protocol = protocol
                     servo.model = dxl_model_number
                     found_servos.append(servo)
-                
+
                 actual_id = actual_id + 1
 
     # Close port
@@ -130,21 +130,21 @@ def search(id_search_min, id_search_max, baudrates_search_list):
 
 def set_angle_limit(id,cw_angle_limit, ccw_angle_limit,baudrate):
     """Configure the angle limits of a servo.
-    
+
     :param int id: Servo ``ìd``
     :param int cw_angle_limit: Clockwise angle limit to be configured
     :param int ccw_angle_limit: Counter-clockwise angle limit to be configured
     :param baudrate: Baudrate of the servo to be configured
-    :return: 
+    :return:
     --``PORT_ERROR`` case it fails to open the port.
-    
+
     --``BAUDRATE_ERROR`` case it fails to change baudrate.
-    
+
     --``COMM_ERROR`` case there is a communication error.
-    
+
     --``HARDWARE_COMM_ERROR`` case there is a hardware communication error.
-    
-    --``NONE`` case the operation succeeds."""      
+
+    --``NONE`` case the operation succeeds."""
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -155,14 +155,14 @@ def set_angle_limit(id,cw_angle_limit, ccw_angle_limit,baudrate):
     else:
         print("Failed to open the port!")
         return PORT_ERROR
-    
+
     # Set port baudrate
     if dynamixel.setBaudRate(port_num, baudrate):
         print("Succeeded to change the baudrate!")
     else:
         print("Failed to change the baudrate!")
         return BAUDRATE_ERROR
-    
+
     #Write CW angle limit
     dynamixel.write2ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_CW_ANGLE_LIMIT, cw_angle_limit)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
@@ -174,7 +174,7 @@ def set_angle_limit(id,cw_angle_limit, ccw_angle_limit,baudrate):
     else:
         print("CW angle changed to: %s" % cw_angle_limit)
         time.sleep(0.5)
-   
+
     # Write CCW angle limit
     dynamixel.write2ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_CCW_ANGLE_LIMIT, ccw_angle_limit)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
@@ -186,22 +186,22 @@ def set_angle_limit(id,cw_angle_limit, ccw_angle_limit,baudrate):
     else:
         print("CCW angle changed to: %s" % ccw_angle_limit)
         time.sleep(0.5)
-        
+
 def factory_reset(id,baudrate):
     """Resets a servo to factory config.
-    
+
     :param int id: Servo ``ìd``
     :param baudrate: Baudrate of the servo to be configured
-    :return: 
+    :return:
     --``PORT_ERROR`` case it fails to open the port.
-    
+
     --``BAUDRATE_ERROR`` case it fails to change baudrate.
-    
+
     --``COMM_ERROR`` case there is a communication error.
-    
+
     --``HARDWARE_COMM_ERROR`` case there is a hardware communication error.
-    
-    --``NONE`` case the operation succeeds."""      
+
+    --``NONE`` case the operation succeeds."""
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -211,41 +211,41 @@ def factory_reset(id,baudrate):
         print("Succeeded to open the port!")
     else:
         print("Failed to open the port!")
-        return PORT_ERROR   
+        return PORT_ERROR
     # Set port baudrate
     if dynamixel.setBaudRate(port_num, baudrate):
         print("Succeeded to change the baudrate!")
     else:
         print("Failed to change the baudrate!")
         return BAUDRATE_ERROR
-        
+
     dynamixel.factoryReset(port_num, PROTOCOL_1 , id, OPERATION_MODE)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
         print("Aborted")
         dynamixel.printTxRxResult(PROTOCOL_1 , dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ))
         return COMM_ERROR
     elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ) != 0:
-        dynamixel.printRxPacketError(PROTOCOL_1 , dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ))  
+        dynamixel.printRxPacketError(PROTOCOL_1 , dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ))
         return HARDWARE_COMM_ERROR
         # Wait for reset
         time.sleep(2)
-    
+
 def set_torque_max(id, percentage,baudrate):
     """Sets a servo max torque.
-    
+
     :param int id: Servo ``ìd``
     :param baudrate: Baudrate of the servo to be configured
     :param int percentage: Torque percentage
-    :return: 
+    :return:
     --``PORT_ERROR`` case it fails to open the port.
-    
+
     --``BAUDRATE_ERROR`` case it fails to change baudrate.
-    
+
     --``COMM_ERROR`` case there is a communication error.
-    
+
     --``HARDWARE_COMM_ERROR`` case there is a hardware communication error.
-    
-    --``NONE`` case the operation succeeds."""      
+
+    --``NONE`` case the operation succeeds."""
     # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -255,14 +255,14 @@ def set_torque_max(id, percentage,baudrate):
         print("Succeeded to open the port!")
     else:
         print("Failed to open the port!")
-        return PORT_ERROR   
+        return PORT_ERROR
     # Set port baudrate
     if dynamixel.setBaudRate(port_num, baudrate):
         print("Succeeded to change the baudrate!")
     else:
         print("Failed to change the baudrate!")
         return BAUDRATE_ERROR
-    #Converting percentage to bit value (check dynamixel e-manual for info)    
+    #Converting percentage to bit value (check dynamixel e-manual for info)
     if percentage == 100:
         value = 1023
     else:
@@ -281,20 +281,20 @@ def set_torque_max(id, percentage,baudrate):
 
 def set_id(id, new_id,baudrate):
     """Sets a servo ID.
-    
+
     :param int id: Servo ``ìd``
     :param baudrate: Baudrate of the servo to be configured
     :param int new_id: ``new_id`` to be configured
-    :return: 
+    :return:
     --``PORT_ERROR`` case it fails to open the port.
-    
+
     --``BAUDRATE_ERROR`` case it fails to change baudrate.
-    
+
     --``COMM_ERROR`` case there is a communication error.
-    
+
     --``HARDWARE_COMM_ERROR`` case there is a hardware communication error.
-    
-    --``NONE`` case the operation succeeds."""      
+
+    --``NONE`` case the operation succeeds."""
      # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -304,14 +304,14 @@ def set_id(id, new_id,baudrate):
         print("Succeeded to open the port!")
     else:
         print("Failed to open the port!")
-        return PORT_ERROR   
+        return PORT_ERROR
     # Set port baudrate
     if dynamixel.setBaudRate(port_num, baudrate):
         print("Succeeded to change the baudrate!")
     else:
         print("Failed to change the baudrate!")
         return BAUDRATE_ERROR
-    #Writes the new ID onto the register    
+    #Writes the new ID onto the register
     dynamixel.write1ByteTxRx(port_num, PROTOCOL_1 ,id, ADDR_ID, new_id)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
         dynamixel.printTxRxResult(PROTOCOL_1, dynamixel.getLastTxRxResult(port_num, PROTOCOL_1))
@@ -322,24 +322,24 @@ def set_id(id, new_id,baudrate):
     else:
         print("ID changed")
         time.sleep(0.2)
-        
-        
+
+
 def set_baudrate(id,new_baudrate,baudrate):
     """Sets a servo baudrate.
-    
+
     :param int id: Servo ``ìd``
     :param baudrate: Baudrate of the servo to be configured
     :param int new_baudrate: ``new_baudrate`` to be configured
-    :return: 
+    :return:
     --``PORT_ERROR`` case it fails to open the port.
-    
+
     --``BAUDRATE_ERROR`` case it fails to change baudrate.
-    
+
     --``COMM_ERROR`` case there is a communication error.
-    
+
     --``HARDWARE_COMM_ERROR`` case there is a hardware communication error.
-    
-    --``NONE`` case the operation succeeds."""    
+
+    --``NONE`` case the operation succeeds."""
      # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -349,7 +349,7 @@ def set_baudrate(id,new_baudrate,baudrate):
         print("Succeeded to open the port!")
     else:
         print("Failed to open the port!")
-        return PORT_ERROR   
+        return PORT_ERROR
     # Set port baudrate
     if dynamixel.setBaudRate(port_num, baudrate):
         print("Succeeded to change the baudrate!")
@@ -358,7 +358,7 @@ def set_baudrate(id,new_baudrate,baudrate):
         return BAUDRATE_ERROR
     baudnum = {1000000:1,500000:3,400000:4,250000:7 , 200000 :9 , 115200 : 16 , 57600 : 34 , 19200 : 103 , 9600 : 207}
     value = baudnum[new_baudrate]
-    
+
     # Set baudrate
     dynamixel.write1ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_BAUDRATE, value)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
@@ -374,21 +374,21 @@ def set_baudrate(id,new_baudrate,baudrate):
 
 def reverse_slave(id,reverse_mode_enable,slave_mode_enable,baudrate):
     """Sets the drive mode.
-    
+
     :param int id: Servo ``ìd``
     :param baudrate: Baudrate of the servo to be configured
     :param int reverse_mode_enable: Reverse mode checkbox state
     :param int slave_mode_enable: Slave mode checkbox state
-    :return: 
+    :return:
     --``PORT_ERROR`` case it fails to open the port.
-    
+
     --``BAUDRATE_ERROR`` case it fails to change baudrate.
-    
+
     --``COMM_ERROR`` case there is a communication error.
-    
+
     --``HARDWARE_COMM_ERROR`` case there is a hardware communication error.
-    
-    --``NONE`` case the operation succeeds."""    
+
+    --``NONE`` case the operation succeeds."""
      # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -398,29 +398,29 @@ def reverse_slave(id,reverse_mode_enable,slave_mode_enable,baudrate):
         print("Succeeded to open the port!")
     else:
         print("Failed to open the port!")
-        return PORT_ERROR   
+        return PORT_ERROR
     # Set port baudrate
     if dynamixel.setBaudRate(port_num, baudrate):
         print("Succeeded to change the baudrate!")
     else:
         print("Failed to change the baudrate!")
         return BAUDRATE_ERROR
-        
+
     slave_binary = 0x02
     reverse_binary = 0x01
     drive_mode_byte = 0x00
-    
+
     if reverse_mode_enable == 2:
         drive_mode_byte = reverse_binary + drive_mode_byte
     else:
         drive_mode_byte = drive_mode_byte
-    
+
     if slave_mode_enable == 2:
         drive_mode_byte = slave_binary + drive_mode_byte
     else:
         drive_mode_byte = drive_mode_byte
-    
- 
+
+
     # Set drive mode
     dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_DRIVE_MODE, drive_mode_byte)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1) != COMM_SUCCESS:
@@ -435,22 +435,22 @@ def reverse_slave(id,reverse_mode_enable,slave_mode_enable,baudrate):
 
 def set_pid_gain(id,d_gain,i_gain,p_gain,baudrate):
     """Sets the PID Gains.
-    
+
     :param int id: Servo ``ìd``
     :param baudrate: Baudrate of the servo to be configured
     :param int d_gain: D Gain
     :param int i_gain: I Gain
     :param int p_gain: P Gain
-    :return: 
+    :return:
     --``PORT_ERROR`` case it fails to open the port.
-    
+
     --``BAUDRATE_ERROR`` case it fails to change baudrate.
-    
+
     --``COMM_ERROR`` case there is a communication error.
-    
+
     --``HARDWARE_COMM_ERROR`` case there is a hardware communication error.
-    
-    --``NONE`` case the operation succeeds."""  
+
+    --``NONE`` case the operation succeeds."""
      # Get methods and members of PortHandlerLinux or PortHandlerWindows
     port_num = dynamixel.portHandler(DEVICENAME)
     # Initialize PacketHandler Structs
@@ -460,7 +460,7 @@ def set_pid_gain(id,d_gain,i_gain,p_gain,baudrate):
         print("Succeeded to open the port!")
     else:
         print("Failed to open the port!")
-        return PORT_ERROR   
+        return PORT_ERROR
     # Set port baudrate
     if dynamixel.setBaudRate(port_num, baudrate):
         print("Succeeded to change the baudrate!")
@@ -479,7 +479,7 @@ def set_pid_gain(id,d_gain,i_gain,p_gain,baudrate):
         #D gain set
         time.sleep(0.5)
 
-    
+
     # I gain config
     dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_I_GAIN, i_gain)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1) != COMM_SUCCESS:
@@ -492,7 +492,7 @@ def set_pid_gain(id,d_gain,i_gain,p_gain,baudrate):
         #I gain set
         time.sleep(0.5)
 
-    
+
     # P gain config
     dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_P_GAIN, p_gain)
     if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1) != COMM_SUCCESS:

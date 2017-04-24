@@ -1,11 +1,6 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'program.ui'
-#
-# Created: Thu Apr  6 16:36:52 2017
-#      by: PyQt4 UI code generator 4.10.4
-#
-# WARNING! All changes made in this file will be lost!
+# Author: Cleber de Souza Couto Filho (clebercoutof@gmail.com)
 
 from PyQt4 import QtCore, QtGui
 
@@ -28,10 +23,12 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_MainWindow(object):
+    """QT Class with the interface and the connections"""
+
     #Creating all the variables that will be used as argument of dynamixel functions
     def __init__(self):
         self.baudrates_search_list = []
-        
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
         MainWindow.resize(1051, 587)
@@ -444,39 +441,33 @@ class Ui_MainWindow(object):
         #Connects search button to search method
         self.scan_btn.clicked.connect(self.network_search)
         #Connects the update memory button to configure method
-        self.update_memory.clicked.connect(self.configure)
+        self.update_memory.clicked.connect(self.configure_confirmation)
         #Port changing
         self.port_combox.currentIndexChanged.connect(self.port_change)
-        
-    #Only enables the multiturn and the reverse/slave option for specific models
-    #Arguments: Nothing       #Returns: Nothing
+
     def enable_checkboxes(self):
         multiturn_servos_index = [7,8,9,10]
         reverse_slave_index = [10]
-        
+
         if self.model_list.currentIndex() in multiturn_servos_index:
             self.multiturn_mode.setEnabled(True)
         else:
             self.multiturn_mode.setEnabled(False)
-        
+
         if self.model_list.currentIndex() in reverse_slave_index:
             self.reverse_mode.setEnabled(True)
             self.slave_mode.setEnabled(True)
         else:
             self.reverse_mode.setEnabled(False)
             self.slave_mode.setEnabled(False)
-    
-    
-    #Unable wheel and joint mode when multiturn is checked
-    #Arguments: Nothing       #Returns: Nothing
+
     def uncheck_modes(self):
+        """Uncheck wheel and joint mode checkbox"""
         self.wheel_mode.setCheckState(False)
         self.joint_mode.setCheckState(False)
 
-    
-    #Sets the cw and cww angle limit based on which mode is checked
-    #Arguments: Nothing       #Returns: Nothing
     def define_angle_limit(self):
+        """Sets the angle limits based on the mode selected"""
         #If wheel mode is selected set limits as 0
         if self.wheel_mode.checkState() == 2:
             self.cw_anglelimit.setValue(0)
@@ -484,13 +475,10 @@ class Ui_MainWindow(object):
         #if multiturn mode is selected, set limits as 4095
         elif self.multiturn_mode.checkState() == 2:
             self.cw_anglelimit.setValue(4095)
-            self.ccw_anglelimit.setValue(4095)            
+            self.ccw_anglelimit.setValue(4095)
 
-            
-    
-    #Organizes the table with the servos in the network
-    #Arguments:Found servos vector       #Returns: Nothing
     def table_organize(self,found_servos):
+        """Organizes the Found servos table with the search result"""
         #sets the number of rows
         self.table_found.setRowCount(len(found_servos))
         #Loop through the list and set the itens
@@ -505,83 +493,186 @@ class Ui_MainWindow(object):
             self.table_found.setItem(current_row,0,id_item)
             self.table_found.setItem(current_row,1,model_item)
             self.table_found.setItem(current_row,2,baudrate_item)
-    
-    
-    #Organizes the vector with all the baudrates that will be used to search
-    #Arguments: Nothing       #Returns: Nothing
+
     def baudrates_to_search(self):
-    #Clear the list 
+        """Organizes the list with all the baudrates that will be used to search"""
+    #Clear the list
         self.baudrates_search_list = []
         #Loops through the list and saves checked values
         for i in range(self.baudrate_list.count()):
             if self.baudrate_list.item(i).checkState() == QtCore.Qt.Checked:
                 value = int(self.baudrate_list.item(i).text())
                 self.baudrates_search_list.append(value)
-    
 
-    
-    #Search for servos through the network
-    #Arguments: Nothing       #Returns: Nothing
     def network_search(self):
+        """Search in the network for servos in the selected baudrates and in the ID range"""
         id_min = self.id_search_min.value()
         id_max = self.id_search_max.value()
-        found_servos = mixcell.search(id_min,id_max,self.baudrates_search_list)
-        self.table_organize(found_servos)
-    
-    
-    #Configures the servo with the specified parameters
-    #Arguments: Nothing       #Returns: Nothing
+        search_result = mixcell.search(id_min,id_max,self.baudrates_search_list)
+        if search_result == mixcell.PORT_ERROR:
+            self.port_error_message()
+        elif search_result == mixcell.BAUDRATE_ERROR:
+            self.baudrate_error_message()
+        elif len(search_result) == 0:
+            self.no_servos_found_message()
+        else:
+            self.table_organize(search_result)
+
+    def port_error_message(self):
+        """Displays the Port error message"""
+        msg = QtGui.QMessageBox()
+        msg.setIcon(QtGui.QMessageBox.Critical)
+        msg.setText("Error while opening the port")
+        msg.setWindowTitle("Port Error")
+        msg.exec_()
+
+    def hardware_comm_error_message(self):
+        """Displays the hardware communication error message"""
+        msg = QtGui.QMessageBox()
+        msg.setIcon(QtGui.QMessageBox.Critical)
+        msg.setText("Communication Hardware error!")
+        msg.setWindowTitle("Hardware Comm error")
+        msg.exec_()
+
+    def comm_error_message(self):
+        """Displays te communication error message"""
+        msg = QtGui.QMessageBox()
+        msg.setIcon(QtGui.QMessageBox.Critical)
+        msg.setText("Communication error")
+        msg.setWindowTitle("Comm Error")
+        msg.exec_()
+
+    def baudrate_error_message(self):
+        """Displays the baudrate error message"""
+        msg = QtGui.QMessageBox()
+        msg.setIcon(QtGui.QMessageBox.Critical)
+        msg.setText("Error while changing baudrate" )
+        msg.setWindowTitle("Baudrate error")
+        msg.exec_()
+
+    def no_servos_found_message(self):
+        """Displays the No servos were found on your network message"""
+        msg = QtGui.QMessageBox()
+        msg.setIcon(QtGui.QMessageBox.Warning)
+        msg.setText("No servos were found on your network, check your search parameters" )
+        msg.setWindowTitle("Nothing found")
+        msg.exec_()
+
+    def configure_confirmation(self):
+       """Displays the configure confirmation message"""
+       msg = QtGui.QMessageBox()
+       msg.setIcon(QtGui.QMessageBox.Question)
+       msg.setText("Update memory?")
+       msg.setWindowTitle("Confirmation")
+       msg.setStandardButtons(QtGui.QMessageBox.Yes | QtGui.QMessageBox.No)
+       rev = msg.exec_()
+       if rev == QtGui.QMessageBox.Yes:
+           self.configure()
+       else:
+           pass
+
     def configure(self):
+        """Configures the servo as the parameters on the interface"""
         #User input
         id = self.servo_id.value()
         baudrate = int(self.servo_baudlist.currentText())
-        
+
         #Checks if factory reset is marked
         if self.factory_reset_box.checkState() == 2:
             mixcell.factory_reset(id,baudrate)
         else:
             #Id to be configured
             new_id = self.new_id.value()
-            
+
             #Sets ID
-            mixcell.set_id(id, new_id,baudrate)
-            id = new_id
-            
+            id_change_result = mixcell.set_id(id, new_id,baudrate)
+            if id_change_result == mixcell.PORT_ERROR:
+                self.port_error_message()
+            elif id_change_result == mixcell.BAUDRATE_ERROR:
+                self.baudrate_error_message()
+            else:
+                id = new_id
+
             #Baudrate to be configured
             new_baudrate = int(self.new_baudlist.currentText())
-            mixcell.set_baudrate(id,new_baudrate,baudrate)
-            baudrate = new_baudrate
-            
+            baudrate_change_result = mixcell.set_baudrate(id,new_baudrate,baudrate)
+            if baudrate_change_result == mixcell.PORT_ERROR:
+                self.port_error_message()
+            elif baudrate_change_result == mixcell.BAUDRATE_ERROR:
+                self.baudrate_error_message()
+            if baudrate_change_result == mixcell.HARDWARE_COMM_ERROR:
+                self.hardware_comm_error_message()
+            elif baudrate_change_result == mixcell.COMM_ERROR:
+                self.comm_error_message()
+            else:
+                baudrate = new_baudrate
+
             #Cw angle limit to be configured
             cw_angle_limit = self.cw_anglelimit.value()
             #CCW angle limit to be configured
             ccw_angle_limit = self.ccw_anglelimit.value()
-            mixcell.set_angle_limit(id,cw_angle_limit,ccw_angle_limit,baudrate)
-            
+
+            angle_limit_result = mixcell.set_angle_limit(id,cw_angle_limit,ccw_angle_limit,baudrate)
+            if angle_limit_result == mixcell.PORT_ERROR:
+                self.port_error_message()
+            elif angle_limit_result == mixcell.BAUDRATE_ERROR:
+                self.baudrate_error_message()
+            elif angle_limit_result == mixcell.HARDWARE_COMM_ERROR:
+                self.hardware_comm_error_message()
+            elif angle_limit_result == mixcell.COMM_ERROR:
+                self.comm_error_message
+
             #Torque value
             torque_value = self.torque_spin.value()
-            mixcell.set_torque_max(id,torque_value,baudrate)           
-        
+            torque_value_result = mixcell.set_torque_max(id,torque_value,baudrate)
+            if torque_value_result == mixcell.PORT_ERROR:
+                self.port_error_message()
+            elif torque_value_result == mixcell.BAUDRATE_ERROR:
+                self.baudrate_error_message()
+            elif torque_value_result == mixcell.HARDWARE_COMM_ERROR:
+                self.hardware_comm_error_message()
+            elif torque_value_result == mixcell.COMM_ERROR:
+                self.comm_error_message
+
             #D gain to be configured
             d_gain = self.d_gain.value()
             #I gain to be configured
             i_gain = self.i_gain.value()
             #P gain to be configured
             p_gain = self.p_gain.value()
-            mixcell.set_pid_gain(id,d_gain,i_gain,p_gain,baudrate)
+            pid_gain_result = mixcell.set_pid_gain(id,d_gain,i_gain,p_gain,baudrate)
+            if pid_gain_result == mixcell.PORT_ERROR:
+                self.port_error_message()
+            elif pid_gain_result == mixcell.BAUDRATE_ERROR:
+                self.baudrate_error_message()
+            elif pid_gain_result == mixcell.HARDWARE_COMM_ERROR:
+                self.hardware_comm_error_message()
+            elif pid_gain_result == mixcell.COMM_ERROR:
+                self.comm_error_message
+
             if self.model_list.currentIndex() == 10:
                 #Reverse mode checkbox state
                 reverse_mode_enable = self.reverse_mode.checkState()
                 #Slave mode checkbox state
                 slave_mode_enable = self.slave_mode.checkState()
-                mixcell.reverse_slave(id,reverse_mode_enable,slave_mode_enable,baudrate)
-            
-            print("configured")
-     
-        
-    
+                reverse_slave_result =mixcell.reverse_slave(id,reverse_mode_enable,slave_mode_enable,baudrate)
+                if reverse_slave_result == mixcell.PORT_ERROR:
+                    self.port_error_message()
+                elif reverse_slave_result == mixcell.BAUDRATE_ERROR:
+                    self.baudrate_error_message()
+                elif reverse_slave_result == mixcell.HARDWARE_COMM_ERROR:
+                    self.hardware_comm_error_message()
+                elif reverse_slave_result == mixcell.COMM_ERROR:
+                    self.comm_error_message
+
+            print("Operation complete!")
+
     def port_change(self):
-        mixcell.port = str(self.port_combox.currentText())
+        """Changes the current port based on the one selected in the interface"""
+        port = str(self.port_combox.currentText())
+        devicename = port.encode('-utf8')
+        mixcell.DEVICENAME = devicename
+
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.label_4.setText(_translate("MainWindow", "Min. ID", None))
@@ -674,7 +765,6 @@ class Ui_MainWindow(object):
         self.model_list.setItemText(9, _translate("MainWindow", "MX-64", None))
         self.model_list.setItemText(10, _translate("MainWindow", "MX-106", None))
 
-
 if __name__ == "__main__":
     import sys
     app = QtGui.QApplication(sys.argv)
@@ -683,4 +773,3 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-

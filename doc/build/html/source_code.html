@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Source Code &#8212; Mixcell 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="QT Functions" href="mixcell_qt.html" />
+    <link rel="prev" title="Welcome to Mixcell’s documentation!" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mixcell_qt.html" title="QT Functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Mixcell’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mixcell 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="source-code">
+<h1>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">¶</a></h1>
+<p>This library was based on the dynamixel functions and examples avaiable in the Dynamixel SDK , created with the purpose of being used with the <code class="docutils literal"><span class="pre">Mixcell</span></code> QT interface, returning specific errors that will be used to alert the user for some commom problems, the complete code can be find at: <a class="reference external" href="https://github.com/clebercoutof/mixcell/">https://github.com/clebercoutof/mixcell/</a></p>
+<span class="target" id="module-source_code"></span><dl class="class">
+<dt id="source_code.Dynamixel">
+<em class="property">class </em><code class="descclassname">source_code.</code><code class="descname">Dynamixel</code><a class="headerlink" href="#source_code.Dynamixel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is used to store the Dynamixel, <code class="docutils literal"><span class="pre">id</span></code>, <code class="docutils literal"><span class="pre">baudrate</span></code>, <code class="docutils literal"><span class="pre">protocol</span></code> and <code class="docutils literal"><span class="pre">model</span></code>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="source_code.factory_reset">
+<code class="descclassname">source_code.</code><code class="descname">factory_reset</code><span class="sig-paren">(</span><em>id</em>, <em>baudrate</em><span class="sig-paren">)</span><a class="headerlink" href="#source_code.factory_reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets a servo to factory config.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<em>int</em>) &#8211; Servo <code class="docutils literal"><span class="pre">ìd</span></code></li>
+<li><strong>baudrate</strong> &#8211; Baudrate of the servo to be configured</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&#8211;<code class="docutils literal"><span class="pre">PORT_ERROR</span></code> case it fails to open the port.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">BAUDRATE_ERROR</span></code> case it fails to change baudrate.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">COMM_ERROR</span></code> case there is a communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">HARDWARE_COMM_ERROR</span></code> case there is a hardware communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">NONE</span></code> case the operation succeeds.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="source_code.reverse_slave">
+<code class="descclassname">source_code.</code><code class="descname">reverse_slave</code><span class="sig-paren">(</span><em>id</em>, <em>reverse_mode_enable</em>, <em>slave_mode_enable</em>, <em>baudrate</em><span class="sig-paren">)</span><a class="headerlink" href="#source_code.reverse_slave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the drive mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<em>int</em>) &#8211; Servo <code class="docutils literal"><span class="pre">ìd</span></code></li>
+<li><strong>baudrate</strong> &#8211; Baudrate of the servo to be configured</li>
+<li><strong>reverse_mode_enable</strong> (<em>int</em>) &#8211; Reverse mode checkbox state</li>
+<li><strong>slave_mode_enable</strong> (<em>int</em>) &#8211; Slave mode checkbox state</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&#8211;<code class="docutils literal"><span class="pre">PORT_ERROR</span></code> case it fails to open the port.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">BAUDRATE_ERROR</span></code> case it fails to change baudrate.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">COMM_ERROR</span></code> case there is a communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">HARDWARE_COMM_ERROR</span></code> case there is a hardware communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">NONE</span></code> case the operation succeeds.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="source_code.search">
+<code class="descclassname">source_code.</code><code class="descname">search</code><span class="sig-paren">(</span><em>id_search_min</em>, <em>id_search_max</em>, <em>baudrates_search_list</em><span class="sig-paren">)</span><a class="headerlink" href="#source_code.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for servos in range of <code class="docutils literal"><span class="pre">id_search_min</span></code> and <code class="docutils literal"><span class="pre">id_search_max</span></code> for all baudrates in <code class="docutils literal"><span class="pre">baudrates_search_list</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id_search_min</strong> (<em>int</em>) &#8211; ID to start searching.</li>
+<li><strong>id_search_max</strong> (<em>int</em>) &#8211; ID to stop pinging.</li>
+<li><strong>baudrates_search_list</strong> (<em>list</em>) &#8211; List containing the baudrates that the user want to search.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><code class="docutils literal"><span class="pre">found_servos</span></code> list containing the servos found.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">List containing the <code class="docutils literal"><span class="pre">Dynamixel</span></code> object servos</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="source_code.set_angle_limit">
+<code class="descclassname">source_code.</code><code class="descname">set_angle_limit</code><span class="sig-paren">(</span><em>id</em>, <em>cw_angle_limit</em>, <em>ccw_angle_limit</em>, <em>baudrate</em><span class="sig-paren">)</span><a class="headerlink" href="#source_code.set_angle_limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure the angle limits of a servo.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<em>int</em>) &#8211; Servo <code class="docutils literal"><span class="pre">ìd</span></code></li>
+<li><strong>cw_angle_limit</strong> (<em>int</em>) &#8211; Clockwise angle limit to be configured</li>
+<li><strong>ccw_angle_limit</strong> (<em>int</em>) &#8211; Counter-clockwise angle limit to be configured</li>
+<li><strong>baudrate</strong> &#8211; Baudrate of the servo to be configured</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&#8211;<code class="docutils literal"><span class="pre">PORT_ERROR</span></code> case it fails to open the port.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">BAUDRATE_ERROR</span></code> case it fails to change baudrate.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">COMM_ERROR</span></code> case there is a communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">HARDWARE_COMM_ERROR</span></code> case there is a hardware communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">NONE</span></code> case the operation succeeds.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="source_code.set_baudrate">
+<code class="descclassname">source_code.</code><code class="descname">set_baudrate</code><span class="sig-paren">(</span><em>id</em>, <em>new_baudrate</em>, <em>baudrate</em><span class="sig-paren">)</span><a class="headerlink" href="#source_code.set_baudrate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a servo baudrate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<em>int</em>) &#8211; Servo <code class="docutils literal"><span class="pre">ìd</span></code></li>
+<li><strong>baudrate</strong> &#8211; Baudrate of the servo to be configured</li>
+<li><strong>new_baudrate</strong> (<em>int</em>) &#8211; <code class="docutils literal"><span class="pre">new_baudrate</span></code> to be configured</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&#8211;<code class="docutils literal"><span class="pre">PORT_ERROR</span></code> case it fails to open the port.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">BAUDRATE_ERROR</span></code> case it fails to change baudrate.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">COMM_ERROR</span></code> case there is a communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">HARDWARE_COMM_ERROR</span></code> case there is a hardware communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">NONE</span></code> case the operation succeeds.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="source_code.set_id">
+<code class="descclassname">source_code.</code><code class="descname">set_id</code><span class="sig-paren">(</span><em>id</em>, <em>new_id</em>, <em>baudrate</em><span class="sig-paren">)</span><a class="headerlink" href="#source_code.set_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a servo ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<em>int</em>) &#8211; Servo <code class="docutils literal"><span class="pre">ìd</span></code></li>
+<li><strong>baudrate</strong> &#8211; Baudrate of the servo to be configured</li>
+<li><strong>new_id</strong> (<em>int</em>) &#8211; <code class="docutils literal"><span class="pre">new_id</span></code> to be configured</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&#8211;<code class="docutils literal"><span class="pre">PORT_ERROR</span></code> case it fails to open the port.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">BAUDRATE_ERROR</span></code> case it fails to change baudrate.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">COMM_ERROR</span></code> case there is a communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">HARDWARE_COMM_ERROR</span></code> case there is a hardware communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">NONE</span></code> case the operation succeeds.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="source_code.set_pid_gain">
+<code class="descclassname">source_code.</code><code class="descname">set_pid_gain</code><span class="sig-paren">(</span><em>id</em>, <em>d_gain</em>, <em>i_gain</em>, <em>p_gain</em>, <em>baudrate</em><span class="sig-paren">)</span><a class="headerlink" href="#source_code.set_pid_gain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the PID Gains.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<em>int</em>) &#8211; Servo <code class="docutils literal"><span class="pre">ìd</span></code></li>
+<li><strong>baudrate</strong> &#8211; Baudrate of the servo to be configured</li>
+<li><strong>d_gain</strong> (<em>int</em>) &#8211; D Gain</li>
+<li><strong>i_gain</strong> (<em>int</em>) &#8211; I Gain</li>
+<li><strong>p_gain</strong> (<em>int</em>) &#8211; P Gain</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&#8211;<code class="docutils literal"><span class="pre">PORT_ERROR</span></code> case it fails to open the port.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">BAUDRATE_ERROR</span></code> case it fails to change baudrate.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">COMM_ERROR</span></code> case there is a communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">HARDWARE_COMM_ERROR</span></code> case there is a hardware communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">NONE</span></code> case the operation succeeds.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="source_code.set_torque_max">
+<code class="descclassname">source_code.</code><code class="descname">set_torque_max</code><span class="sig-paren">(</span><em>id</em>, <em>percentage</em>, <em>baudrate</em><span class="sig-paren">)</span><a class="headerlink" href="#source_code.set_torque_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a servo max torque.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<em>int</em>) &#8211; Servo <code class="docutils literal"><span class="pre">ìd</span></code></li>
+<li><strong>baudrate</strong> &#8211; Baudrate of the servo to be configured</li>
+<li><strong>percentage</strong> (<em>int</em>) &#8211; Torque percentage</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&#8211;<code class="docutils literal"><span class="pre">PORT_ERROR</span></code> case it fails to open the port.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">BAUDRATE_ERROR</span></code> case it fails to change baudrate.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">COMM_ERROR</span></code> case there is a communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">HARDWARE_COMM_ERROR</span></code> case there is a hardware communication error.</p>
+<p>&#8211;<code class="docutils literal"><span class="pre">NONE</span></code> case the operation succeeds.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Mixcell&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mixcell_qt.html"
+                        title="next chapter">QT Functions</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/source_code.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mixcell_qt.html" title="QT Functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Mixcell’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mixcell 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Cleber Couto Filho.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+    </div>
+  </body>
+</html>
