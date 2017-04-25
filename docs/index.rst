@@ -8,6 +8,9 @@ Welcome to Mixcell's documentation!
 
 Mixcell is a software created to handle with dynamixels with a friendly interface. This documentation contains all
 codes created by the author and the complete code can be found at: https://github.com/clebercoutof/mixcell/
+asdasdad
+asdasdad
+sadadadadasdsadasdasdadsadsadadsadsad
 
 .. toctree::
    :maxdepth: 2
