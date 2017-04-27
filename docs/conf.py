@@ -20,6 +20,11 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('.'))
 
+import mock
+
+MOCK_MODULES = ['source_code','mixcell_qt','dynamixel_functions','ctypes.cdll']
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock.Mock()
 
 # -- General configuration ------------------------------------------------
 
@@ -35,10 +40,13 @@ extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
-    'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
-    'sphinx.ext.githubpages']
+    'sphinx.ext.githubpages'
+    #,'rst2pdf.pdfbuilder'
+		]
+
+#pdf_documents = [('index', u'Mixcell', u'Mixcell Documentation', u'Cleber Couto Filho'),]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
