@@ -2,20 +2,17 @@
 
 This program is used to identify dynamixels on your network and configure dynamixel parameters
 
-##Features
-* NETWORK SEARCH
-Search through the selected baudrates and IDs, identifying the connected servos parameters and models.
-* FACTORY RESET
-Resets an specified servo to the factory config
-* PARAMETERS CONFIG
-Configures the following parameters:
-ID
-Baudrate
-Torque Max
-Mode 	(Wheel/Joint/Multi Turn)
-CW angle limit / CCW angle limit
-P/I/D Gains
-Drive mode (Reverse/Slave)
+## Features
+* NETWORK SEARCH - Search through the selected baudrates and IDs, identifying the connected servos parameters and models.
+* FACTORY RESET -Resets an specified servo to the factory config
+* PARAMETERS CONFIG -Configures the following parameters:
+- ID
+- Baudrate
+- Torque Max
+- Mode 	(Wheel/Joint/Multi Turn)
+- CW angle limit / CCW angle limit
+- P/I/D Gains
+- Drive mode (Reverse/Slave)
 
 ## Getting Started
 
