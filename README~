@@ -1,9 +1,0 @@
-*MIXCELL PROGRAM*
-This program was createad to simplify dynamixel parameters indentification and configuration
-
-Features
--Search Feature
-Search through the specified baudrates and IDs, identifying all the servos and their models
--Factory Reset
-Resets an servo to the factory config
-- 
