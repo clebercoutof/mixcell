@@ -8,14 +8,14 @@ Search through the selected baudrates and IDs, identifying the connected servos 
 * FACTORY RESET
 Resets an specified servo to the factory config
 * PARAMETERS CONFIG
-Configured the following parameters
-- ID
-- Baudrate
-- Torque Max
-- Mode 	(Wheel/Joint/Multi Turn)
-- CW angle limit / CCW angle limit
-- P/I/D Gains
-- Drive mode (Reverse/Slave)
+Configures the following parameters:
+ID
+Baudrate
+Torque Max
+Mode 	(Wheel/Joint/Multi Turn)
+CW angle limit / CCW angle limit
+P/I/D Gains
+Drive mode (Reverse/Slave)
 
 ## Getting Started
 
