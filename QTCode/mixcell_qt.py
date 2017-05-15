@@ -30,7 +30,7 @@ class Ui_MainWindow(object):
         self.baudrates_search_list = []
 
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName(_fromUtf8("MainWindow"))
+        MainWindow.setObjectName(_fromUtf8("Mixcell"))
         MainWindow.resize(1051, 587)
         MainWindow.setMinimumSize(QtCore.QSize(1051, 587))
         MainWindow.setStyleSheet(_fromUtf8(""))
@@ -674,7 +674,7 @@ class Ui_MainWindow(object):
         mixcell.DEVICENAME = devicename
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
+        MainWindow.setWindowTitle(_translate("Mixcell", "Mixcell", None))
         self.label_4.setText(_translate("MainWindow", "Min. ID", None))
         self.label_5.setText(_translate("MainWindow", "Max. ID", None))
         self.portttxt.setText(_translate("MainWindow", "PORTS", None))
