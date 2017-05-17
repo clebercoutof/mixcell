@@ -2,6 +2,8 @@
 
 This program is used to identify dynamixels on your network and configure dynamixel parameters
 
+![mixcell](https://cloud.githubusercontent.com/assets/21127944/26158221/8c964ac8-3af1-11e7-8d05-dc0d2a411292.png)
+
 ## Features
 * NETWORK SEARCH - Search through the selected baudrates and IDs, identifying the connected servos parameters and models.
 * FACTORY RESET -Resets an specified servo to the factory config
