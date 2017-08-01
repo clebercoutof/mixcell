@@ -77,7 +77,10 @@ $ sudo make reinstall
 ```
 
 Your user has to have permissions to access the USB port, so:
-```sudo usermod -a -G dialout $USER ```
+
+```
+sudo usermod -a -G dialout $USER 
+```
 
 And restart your computer
 
