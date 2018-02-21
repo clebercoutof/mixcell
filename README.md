@@ -37,7 +37,7 @@ It's necessary to install the linux64 C library of [Dynamixel SDK Version 3.4.3]
 
 You can find the complete installation guide [here](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
 
-Download the file nad extract in the desired folder
+Download the file and extract in the desired folder
 
 ```
 $ cd ~/foo/DynamixelSDK-3.4.3/c/build/linux64
@@ -72,6 +72,7 @@ Case there is an error
 $ sudo make reinstall
 ```
 
+## Setting user permissions
 
 Your user has to have permissions to access the USB port, so:
 
