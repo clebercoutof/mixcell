@@ -33,18 +33,14 @@ $ cd ~/foo/mixcell/QTCode
 $ python mixcell_qt.py
 ```
 ### Prerequisites
-It's necessary to install the linux64 C library of [Dynamixel SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK).
+It's necessary to install the linux64 C library of [Dynamixel SDK Version 3.4.3](https://github.com/ROBOTIS-GIT/DynamixelSDK/releases/tag/3.4.3). 
 
-You can find the complete installation guide [here](https://github.com/ROBOTIS-GIT/DynamixelSDK/wiki/3.2.1.2-C-Linux-(or-Linux-for-SBCs))
+You can find the complete installation guide [here](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
 
-Clone the dynamixel sdk 
-
-```
-$ git clone https://github.com/ROBOTIS-GIT/DynamixelSDK
-```
+Download the file nad extract in the desired folder
 
 ```
-$ cd ~/foo/DynamixelSDK/c/build/linux64
+$ cd ~/foo/DynamixelSDK-3.4.3/c/build/linux64
 ```
 
 * Build the library
@@ -75,6 +71,7 @@ Case there is an error
 ```
 $ sudo make reinstall
 ```
+
 
 Your user has to have permissions to access the USB port, so:
 
