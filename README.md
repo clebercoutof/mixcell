@@ -19,23 +19,38 @@ This program is used to identify dynamixels on your network and configure dynami
 ```
 ## Getting Started
 
-If you have already installed in your system the dynamixel sdk.
-
 Clone the repository
 
 ```
 $ git clone https://github.com/clebercoutof/mixcell
 ```
+
+Run the shell script to install the Dynamixel SDK, case there is an error follow the instructions 
+in the prerequisites.
+
+Go to the installation folder and run install.sh
+
 ```
-$ cd ~/foo/mixcell/QTCode
+$ cd mixcell/install/
 ```
+
 ```
-$ python mixcell_qt.py
+$ ./install.sh
+```
+It's necessary to give your user permanent permissions do access the usb port, so
+```
+sudo usermod -a -G dialout $USER 
+```
+And restart your computer
+
+To run mixcell, just open the terminal and type:
+```
+$ mixcell
 ```
 ### Prerequisites
-It's necessary to install the linux64 C library of [Dynamixel SDK Version 3.4.3](https://github.com/ROBOTIS-GIT/DynamixelSDK/releases/tag/3.4.3). 
+It's necessary to install the linux64 C library of [Dynamixel SDK Version 3.4.3](https://github.com/ROBOTIS-GIT/DynamixelSDK/releases/tag/3.4.3) and the PyQT4. 
 
-You can find the complete installation guide [here](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
+You can find the complete installation guide for the SDK [here](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
 
 Download the file and extract in the desired folder
 
@@ -49,13 +64,13 @@ $ cd ~/foo/DynamixelSDK-3.4.3/c/build/linux64
 $ make
 ```
 
-Case there is an error
+* Case there is an error
 
 ```
 $ make clean
 ```
 
-And
+* And
 
 ```
 $ make
@@ -66,21 +81,20 @@ $ make
 $ sudo make install
 ```
 
-Case there is an error
+* Case there is an error
 
 ```
 $ sudo make reinstall
 ```
 
-## Setting user permissions
-
-Your user has to have permissions to access the USB port, so:
-
+In order to install PyQT4
 ```
-sudo usermod -a -G dialout $USER 
+$ apt-cache search pyqt
 ```
 
-And restart your computer
+```
+$ sudo apt-get install python-qt4
+```
 
 ## Code documentation
 You can find the complete code documentation at http://mixcell.bitballoon.com

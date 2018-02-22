@@ -5,7 +5,7 @@
 from PyQt4 import QtCore, QtGui
 
 import os
-os.sys.path.append('../source_code')             # Path setting
+os.sys.path.append('../source_code/')             # Path setting
 import source_code as mixcell
 
 try:
