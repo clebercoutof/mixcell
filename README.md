@@ -1,4 +1,4 @@
-# Mixcell
+# Mixcell - The Dynamixel Configuration Tool for linux!
 
 This program is used to identify dynamixels on your network and configure dynamixel parameters
 
