@@ -1,8 +1,6 @@
 #!/bin/bash
 
-wget https://github.com/ROBOTIS-GIT/DynamixelSDK/archive/3.4.3.tar.gz
-tar xvzf 3.4.3.tar.gz
-rm -rf 3.4.3.tar.gz
+git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
 cd ..
 cd QTCode/
 cwd=$(pwd)
@@ -19,11 +17,11 @@ source ~/.bashrc
 apt-cache search pyqt
 sudo apt-get install python-qt4
 cd .. 
-cd install/DynamixelSDK-3.4.3/c/build/linux64/
+cd install/DynamixelSDK/c/build/linux64/
 make
 sudo make install
 cd -
 cd install/
-rm -rf DynamixelSDK-3.4.3/
+rm -rf DynamixelSDK/
 
 

@@ -108,19 +108,20 @@ def search(id_search_min, id_search_max, baudrates_search_list):
                 # Try to ping the Dynamixel
                 # Get Dynamixel model number
                 dxl_model_number = dynamixel.pingGetModelNum(port_num, protocol, actual_id)
-                if dynamixel.getLastTxRxResult(port_num, protocol) != COMM_SUCCESS:
-                    dynamixel.printTxRxResult(protocol, dynamixel.getLastTxRxResult(port_num, protocol))
-                elif dynamixel.getLastRxPacketError(port_num, protocol) != 0:
-                    dynamixel.printRxPacketError(protocol, dynamixel.getLastRxPacketError(port_num, protocol))  
+                dxl_comm_result = dynamixel.getLastTxRxResult(port_num, protocol)
+                dxl_error = dynamixel.getLastRxPacketError(port_num, protocol)
+                if dxl_comm_result != COMM_SUCCESS:
+                    print(dynamixel.getTxRxResult(protocol, dxl_comm_result))
+                elif dxl_error != 0:
+                    print(dynamixel.getRxPacketError(protocol, dxl_error))
                 else:
-                    #Case the ping succeeds, creates an servo object and stores it in the found_servos vector
+                    print("[ID:%03d] ping Succeeded. Dynamixel model number : %d" % (actual_id, dxl_model_number))
                     servo = Dynamixel()
                     servo.id = actual_id
                     servo.baudrate = baudrate
                     servo.protocol = protocol
                     servo.model = dxl_model_number
                     found_servos.append(servo)
-                
                 actual_id = actual_id + 1
 
     # Close port
@@ -163,30 +164,34 @@ def set_angle_limit(id,cw_angle_limit, ccw_angle_limit,baudrate):
         print("Failed to change the baudrate!")
         return BAUDRATE_ERROR
     
-    #Write CW angle limit
-    dynamixel.write2ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_CW_ANGLE_LIMIT, cw_angle_limit)
-    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
-        dynamixel.printTxRxResult(PROTOCOL_1 , dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ))
+    # Write goal position
+    dynamixel.write2ByteTxRx(port_num, PROTOCOL_1, id, ADDR_CW_ANGLE_LIMIT, cw_angle_limit)
+    dxl_comm_result = dynamixel.getLastTxRxResult(port_num, PROTOCOL_1)
+    dxl_error = dynamixel.getLastRxPacketError(port_num, PROTOCOL_1)
+    if dxl_comm_result != COMM_SUCCESS:
+        print(dynamixel.getTxRxResult(PROTOCOL_1, dxl_comm_result))
         return COMM_ERROR
-    elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ) != 0:
-        dynamixel.printRxPacketError(PROTOCOL_1 , dynamixel.getLastRxPacketError(port_num,PROTOCOL_1 ))
+    elif dxl_error != 0:
+        print(dynamixel.getRxPacketError(PROTOCOL_1, dxl_error))
         return HARDWARE_COMM_ERROR
     else:
-        print("CW angle changed to: %s" % cw_angle_limit)
-        time.sleep(0.5)
-   
-    # Write CCW angle limit
-    dynamixel.write2ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_CCW_ANGLE_LIMIT, ccw_angle_limit)
-    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
-        dynamixel.printTxRxResult(PROTOCOL_1 , dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ))
+        print("Cw angle changed to: %s" % cw_angle_limit)
+
+    # Write goal position
+    dynamixel.write2ByteTxRx(port_num, PROTOCOL_1, id, ADDR_CW_ANGLE_LIMIT, ccw_angle_limit)
+    dxl_comm_result = dynamixel.getLastTxRxResult(port_num, PROTOCOL_1)
+    dxl_error = dynamixel.getLastRxPacketError(port_num, PROTOCOL_1)
+    if dxl_comm_result != COMM_SUCCESS:
+        print(dynamixel.getTxRxResult(PROTOCOL_1, dxl_comm_result))
         return COMM_ERROR
-    elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ) != 0:
-        dynamixel.printRxPacketError(PROTOCOL_1 , dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ))
+    elif dxl_error != 0:
+        print(dynamixel.getRxPacketError(PROTOCOL_1, dxl_error))
         return HARDWARE_COMM_ERROR
     else:
-        print("CCW angle changed to: %s" % ccw_angle_limit)
-        time.sleep(0.5)
-        
+        print("CCW angle changed to: %s" % cw_angle_limit)
+
+    dynamixel.closePort(port_num)
+
 def factory_reset(id,baudrate):
     """Resets a servo to factory config.
     
@@ -267,18 +272,22 @@ def set_torque_max(id, percentage,baudrate):
         value = 1023
     else:
         value = int(percentage/0.0977517107)
-    #Writing the value in the address
-    dynamixel.write2ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_MAX_TORQUE, value)
-    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
-        dynamixel.printTxRxResult(PROTOCOL_1 , dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ))
+
+    # Write goal position
+    dynamixel.write2ByteTxRx(port_num, PROTOCOL_1, id, ADDR_MAX_TORQUE, value)
+    dxl_comm_result = dynamixel.getLastTxRxResult(port_num, PROTOCOL_1)
+    dxl_error = dynamixel.getLastRxPacketError(port_num, PROTOCOL_1)
+    if dxl_comm_result != COMM_SUCCESS:
+        print(dynamixel.getTxRxResult(PROTOCOL_1, dxl_comm_result))
         return COMM_ERROR
-    elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ) != 0:
-        dynamixel.printRxPacketError(PROTOCOL_1 , dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ))
+    elif dxl_error != 0:
+        print(dynamixel.getRxPacketError(PROTOCOL_1, dxl_error))
         return HARDWARE_COMM_ERROR
     else:
+        print("Torque set to %s " % percentage)
         time.sleep(0.2)
 
-
+    dynamixel.closePort(port_num)
 def set_id(id, new_id,baudrate):
     """Sets a servo ID.
     
@@ -311,19 +320,21 @@ def set_id(id, new_id,baudrate):
     else:
         print("Failed to change the baudrate!")
         return BAUDRATE_ERROR
-    #Writes the new ID onto the register    
-    dynamixel.write1ByteTxRx(port_num, PROTOCOL_1 ,id, ADDR_ID, new_id)
-    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
-        dynamixel.printTxRxResult(PROTOCOL_1, dynamixel.getLastTxRxResult(port_num, PROTOCOL_1))
+    #Writes the new ID onto the register
+    dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_ID, new_id)
+    dxl_comm_result = dynamixel.getLastTxRxResult(port_num, PROTOCOL_1)
+    dxl_error = dynamixel.getLastRxPacketError(port_num, PROTOCOL_1)
+    if dxl_comm_result != COMM_SUCCESS:
+        print(dynamixel.getTxRxResult(PROTOCOL_1, dxl_comm_result))
         return COMM_ERROR
-    elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ) != 0:
-        dynamixel.printRxPacketError(PROTOCOL_1, dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ))
+    elif dxl_error != 0:
+        print(dynamixel.getRxPacketError(PROTOCOL_1, dxl_error))
         return HARDWARE_COMM_ERROR
     else:
-        print("ID changed")
-        time.sleep(0.2)
-        
-        
+        print("ID changed to: %s" % new_id)
+        time.sleep(0.2)    
+    dynamixel.closePort(port_num)
+
 def set_baudrate(id,new_baudrate,baudrate):
     """Sets a servo baudrate.
     
@@ -360,17 +371,20 @@ def set_baudrate(id,new_baudrate,baudrate):
     value = baudnum[new_baudrate]
     
     # Set baudrate
-    dynamixel.write1ByteTxRx(port_num, PROTOCOL_1 , id, ADDR_BAUDRATE, value)
-    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ) != COMM_SUCCESS:
-        dynamixel.printTxRxResult(PROTOCOL_1 , dynamixel.getLastTxRxResult(port_num, PROTOCOL_1 ))
+    dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_BAUDRATE, value)
+    dxl_comm_result = dynamixel.getLastTxRxResult(port_num, PROTOCOL_1)
+    dxl_error = dynamixel.getLastRxPacketError(port_num, PROTOCOL_1)
+    if dxl_comm_result != COMM_SUCCESS:
+        print(dynamixel.getTxRxResult(PROTOCOL_1, dxl_comm_result))
         return COMM_ERROR
-    elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ) != 0:
-        dynamixel.printRxPacketError(PROTOCOL_1 , dynamixel.getLastRxPacketError(port_num, PROTOCOL_1 ))
+    elif dxl_error != 0:
+        print(dynamixel.getRxPacketError(PROTOCOL_1, dxl_error))
         return HARDWARE_COMM_ERROR
     else:
         print("Baudrate changed to : %s" % baudrate)
-        time.sleep(0.2)
+        time.sleep(0.2) 
 
+    dynamixel.closePort(port_num)
 
 def reverse_slave(id,reverse_mode_enable,slave_mode_enable,baudrate):
     """Sets the drive mode.
@@ -420,18 +434,21 @@ def reverse_slave(id,reverse_mode_enable,slave_mode_enable,baudrate):
     else:
         drive_mode_byte = drive_mode_byte
     
- 
     # Set drive mode
     dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_DRIVE_MODE, drive_mode_byte)
-    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1) != COMM_SUCCESS:
-        dynamixel.printTxRxResult(PROTOCOL_1, dynamixel.getLastTxRxResult(port_num, PROTOCOL_1))
+    dxl_comm_result = dynamixel.getLastTxRxResult(port_num, PROTOCOL_1)
+    dxl_error = dynamixel.getLastRxPacketError(port_num, PROTOCOL_1)
+    if dxl_comm_result != COMM_SUCCESS:
+        print(dynamixel.getTxRxResult(PROTOCOL_1, dxl_comm_result))
         return COMM_ERROR
-    elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1) != 0:
-        dynamixel.printRxPacketError(PROTOCOL_1, dynamixel.getLastRxPacketError(port_num, PROTOCOL_1))
+    elif dxl_error != 0:
+        print(dynamixel.getRxPacketError(PROTOCOL_1, dxl_error))
         return HARDWARE_COMM_ERROR
     else:
         print("Drive mode changed")
         time.sleep(0.2)
+
+    dynamixel.closePort(port_num)
 
 def set_pid_gain(id,d_gain,i_gain,p_gain,baudrate):
     """Sets the PID Gains.
@@ -469,39 +486,45 @@ def set_pid_gain(id,d_gain,i_gain,p_gain,baudrate):
         return BAUDRATE_ERROR
     # D gain config
     dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_D_GAIN, d_gain)
-    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1) != COMM_SUCCESS:
-        dynamixel.printTxRxResult(PROTOCOL_1, dynamixel.getLastTxRxResult(port_num, PROTOCOL_1))
+    dxl_comm_result = dynamixel.getLastTxRxResult(port_num, PROTOCOL_1)
+    dxl_error = dynamixel.getLastRxPacketError(port_num, PROTOCOL_1)
+    if dxl_comm_result != COMM_SUCCESS:
+        print(dynamixel.getTxRxResult(PROTOCOL_1, dxl_comm_result))
         return COMM_ERROR
-    elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1) != 0:
-        dynamixel.printRxPacketError(PROTOCOL_1, dynamixel.getLastRxPacketError(port_num, PROTOCOL_1))
+    elif dxl_error != 0:
+        print(dynamixel.getRxPacketError(PROTOCOL_1, dxl_error))
         return HARDWARE_COMM_ERROR
     else:
-        #D gain set
-        time.sleep(0.5)
-
+        print("D gain set")
+        time.sleep(0.2)                                                                    
     
     # I gain config
     dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_I_GAIN, i_gain)
-    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1) != COMM_SUCCESS:
-        dynamixel.printTxRxResult(PROTOCOL_1, dynamixel.getLastTxRxResult(port_num, PROTOCOL_1))
+    dxl_comm_result = dynamixel.getLastTxRxResult(port_num, PROTOCOL_1)
+    dxl_error = dynamixel.getLastRxPacketError(port_num, PROTOCOL_1)
+    if dxl_comm_result != COMM_SUCCESS:
+        print(dynamixel.getTxRxResult(PROTOCOL_1, dxl_comm_result))
         return COMM_ERROR
-    elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1) != 0:
-        dynamixel.printRxPacketError(PROTOCOL_1, dynamixel.getLastRxPacketError(port_num, PROTOCOL_1))
+    elif dxl_error != 0:
+        print(dynamixel.getRxPacketError(PROTOCOL_1, dxl_error))
         return HARDWARE_COMM_ERROR
     else:
-        #I gain set
-        time.sleep(0.5)
+        print("I gain set")
+        time.sleep(0.2)
 
     
     # P gain config
     dynamixel.write1ByteTxRx(port_num, PROTOCOL_1, id, ADDR_P_GAIN, p_gain)
-    if dynamixel.getLastTxRxResult(port_num, PROTOCOL_1) != COMM_SUCCESS:
-        dynamixel.printTxRxResult(PROTOCOL_1, dynamixel.getLastTxRxResult(port_num, PROTOCOL_1))
+    dxl_comm_result = dynamixel.getLastTxRxResult(port_num, PROTOCOL_1)
+    dxl_error = dynamixel.getLastRxPacketError(port_num, PROTOCOL_1)
+    if dxl_comm_result != COMM_SUCCESS:
+        print(dynamixel.getTxRxResult(PROTOCOL_1, dxl_comm_result))
         return COMM_ERROR
-    elif dynamixel.getLastRxPacketError(port_num, PROTOCOL_1) != 0:
-        dynamixel.printRxPacketError(PROTOCOL_1, dynamixel.getLastRxPacketError(port_num, PROTOCOL_1))
+    elif dxl_error != 0:
+        print(dynamixel.getRxPacketError(PROTOCOL_1, dxl_error))
         return HARDWARE_COMM_ERROR
     else:
-        #P gain set
-        time.sleep(0.5)
-    print("Gain changed")
+        print("P gain set")
+        time.sleep(0.2)
+    
+    dynamixel.closePort(port_num)
