@@ -178,7 +178,7 @@ def set_angle_limit(id,cw_angle_limit, ccw_angle_limit,baudrate):
         print("Cw angle changed to: %s" % cw_angle_limit)
 
     # Write goal position
-    dynamixel.write2ByteTxRx(port_num, PROTOCOL_1, id, ADDR_CW_ANGLE_LIMIT, ccw_angle_limit)
+    dynamixel.write2ByteTxRx(port_num, PROTOCOL_1, id, ADDR_CCW_ANGLE_LIMIT, ccw_angle_limit)
     dxl_comm_result = dynamixel.getLastTxRxResult(port_num, PROTOCOL_1)
     dxl_error = dynamixel.getLastRxPacketError(port_num, PROTOCOL_1)
     if dxl_comm_result != COMM_SUCCESS:
