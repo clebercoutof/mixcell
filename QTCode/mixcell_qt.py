@@ -472,6 +472,10 @@ class Ui_MainWindow(object):
         if self.wheel_mode.checkState() == 2:
             self.cw_anglelimit.setValue(0)
             self.ccw_anglelimit.setValue(0)
+        #if JOINT mode is selected, set limits as 4095
+        elif self.joint_mode.checkState() == 2:
+            self.cw_anglelimit.setValue(0)
+            self.ccw_anglelimit.setValue(4095)
         #if multiturn mode is selected, set limits as 4095
         elif self.multiturn_mode.checkState() == 2:
             self.cw_anglelimit.setValue(4095)
