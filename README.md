@@ -17,7 +17,7 @@ This program is used to identify dynamixels on your network and configure dynami
 - P/I/D Gains
 - Drive mode (Reverse/Slave)
 ```
-## Getting Started
+## Installation
 
 Clone the repository
 
@@ -41,14 +41,26 @@ It's necessary to give your user permanent permissions do access the usb port, s
 ```
 sudo usermod -a -G dialout $USER 
 ```
-And restart your computer
+And restart your computer to add your user to the group.
 
 To run mixcell, just open the terminal and type:
 ```
 $ mixcell
 ```
+
+Case you have a non-working mixcell version on your computer because of SDK problems, run the reinstall.sh file
+
+```
+$ cd mixcell/install/
+```
+
+```
+$ ./reinstall.sh
+```
+
+
 ### Prerequisites
-It's necessary to install the linux64 C library of [Dynamixel SDK Version 3.4.3](https://github.com/ROBOTIS-GIT/DynamixelSDK/releases/tag/3.4.3) and the PyQT4. 
+It's necessary to install the linux64 C library of [Dynamixel SDK Version 3.5.4](https://github.com/ROBOTIS-GIT/DynamixelSDK/releases/tag/3.5.4) and the PyQT4. 
 
 You can find the complete installation guide for the SDK [here](http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
 
