@@ -58,7 +58,7 @@ COMM_ERROR = 1002
 HARDWARE_COMM_ERROR = 1003
 
 OPERATION_MODE = 0x00 # Mode is unavailable in Protocol 1.0 Reset
-model_num = {44:"AX-12W",12:"AX-12A",28:"EX-106+",24:"RX-24F",28:"RX-28",64:"RX-64",104:"MX-12W",29:"MX-28",54:"MX-64",320:"MX-106"}
+model_num = {44:"AX-12W",18:"AX-18",12:"AX-12A",28:"EX-106+",24:"RX-24F",28:"RX-28",64:"RX-64",104:"MX-12W",29:"MX-28",54:"MX-64",320:"MX-106"}
 
 # Communication result
 dxl_comm_result = COMM_TX_FAIL                            
