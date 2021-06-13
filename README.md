@@ -108,6 +108,12 @@ $ apt-cache search pyqt
 $ sudo apt-get install python-qt4
 ```
 
+## Code Maintenance and intelectual property
+
+This tool was developed as one of my activites during the internetship in the [Brazilian Institue of Robotics](https://github.com/Brazilian-Institute-of-Robotics) at [Senai CIMATEC](http://www.senaicimatec.com.br/).
+
+The code is oficially maintened by the institution, but feel free to use this repository as a tool to communicate.
+
 ## Code documentation
 You can find the complete code documentation at http://mixcell.bitballoon.com
 
@@ -129,6 +135,8 @@ See also the list of [contributors](https://github.com/your/project/contributors
 * [Python Programming](https://pythonprogramming.net/) QT tutorials.
 
 ## Acknowledgments
+
+ 
 Thanks to [Pedro Xavier](https://github.com/pxalcantara) for full time support and [Henrique Poleselo](https://github.com/hpoleselo) for the documentation support.
 
 
